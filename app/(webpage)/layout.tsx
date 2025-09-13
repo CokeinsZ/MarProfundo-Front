@@ -1,6 +1,8 @@
+// app/layout.tsx
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import Header from "@/components/organisms/header";
+import "../globals.css";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -11,7 +13,6 @@ const geistMono = Geist_Mono({
   variable: "--font-geist-mono",
   subsets: ["latin"],
 });
-
 
 export const metadata: Metadata = {
   title: "Mar abierto",
@@ -26,13 +27,27 @@ export default function webpageLayout({
   return (
     <html lang="en">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased bg-gray-50`}
+        className={`${geistSans.variable} ${geistMono.variable} antialiased relative min-h-screen`}
       >
+        {/* Fondo fijo */}
+        <div className="fixed inset-0 -z-10">
+          <div 
+            className="absolute inset-0"
+            style={{
+              backgroundImage: "url('/fondo.webp')",
+              backgroundSize: "cover",
+              backgroundPosition: "center",
+              backgroundAttachment: "fixed",
+            }}
+          />
+          <div className="absolute inset-0 bg-black/10"></div>
+        </div>
+        
         {/* Header */}
         <Header />
 
         {/* Main Content */}
-        <main className="mx-auto max-w-6xl p-6">{children}</main>
+        <main className="relative z-10">{children}</main>
       </body>
     </html>
   );
