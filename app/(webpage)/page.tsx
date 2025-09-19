@@ -1,8 +1,19 @@
 // app/(webpage)/page.tsx
-import { redirect } from 'next/navigation';
+'use client'
+
+import { useEffect } from 'react'
+import { useRouter } from 'next/navigation'
 
 export default function RootPage() {
-  redirect('/home');
-}
+  const router = useRouter()
 
-export const dynamic = 'force-dynamic';
+  useEffect(() => {
+    router.push('/home')
+  }, [router])
+
+  return (
+    <div>
+      {/* Puedes mostrar un mensaje de carga o un spinner aquí si lo deseas */}
+    </div>
+  )
+}

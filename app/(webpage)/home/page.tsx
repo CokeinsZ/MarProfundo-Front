@@ -2,26 +2,6 @@
 export default function Home() {
   return (
     <div className="min-h-screen">
-      {/* Hero Section */}
-      <section className="bg-blue-50 py-20">
-        <div className="container mx-auto px-6 text-center">
-          <h1 className="text-4xl md:text-5xl font-bold text-blue-800 mb-6">
-            Bienvenido a MARPROFUNDO
-          </h1>
-          <p className="text-xl md:text-2xl text-gray-700 mb-8">
-            Tu tienda especializada en equipos de pesca y acuarofilia
-          </p>
-          <div className="flex justify-center space-x-4">
-            <button className="bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-6 rounded-lg transition-colors">
-              Ver Productos
-            </button>
-            <button className="border-2 border-blue-600 text-blue-600 hover:bg-blue-600 hover:text-white font-bold py-3 px-6 rounded-lg transition-colors">
-              Conócenos
-            </button>
-          </div>
-        </div>
-      </section>
-
       {/* Sección de Categorías */}
       <section className="py-16">
         <div className="container mx-auto px-6">
