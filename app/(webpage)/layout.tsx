@@ -26,10 +26,11 @@ export default function webpageLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased relative min-h-screen`}
-      >
+    <html
+  lang="en"
+  className={`${geistSans.variable} ${geistMono.variable}`}
+>
+  <body className="antialiased relative min-h-screen">
         {/* Fondo fijo */}
         <div className="fixed inset-0 -z-10">
           <div 
@@ -44,8 +45,6 @@ export default function webpageLayout({
           <div className="absolute inset-0 bg-black/10"></div>
         </div>
         
-        {/* Header */}
-        <Header />
 
         {/* Main Content */}
         <main className="relative z-10">{children}</main>
