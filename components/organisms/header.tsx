@@ -39,7 +39,7 @@ export default function Header() {
             <a href="home" className="text-gray-700 hover:text-blue-600 font-medium transition-colors drop-shadow-sm">Home</a>
             <a href="#" className="text-gray-700 hover:text-blue-600 font-medium transition-colors drop-shadow-sm">Categorias</a>
             <a href="aqualog" className="text-gray-700 hover:text-blue-600 font-medium transition-colors drop-shadow-sm">Aqualog</a>
-            <a href="#" className="text-gray-700 hover:text-blue-600 font-medium transition-colors drop-shadow-sm">Mi pecera</a>
+            <a href="pecera" className="text-gray-700 hover:text-blue-600 font-medium transition-colors drop-shadow-sm">Mi pecera</a>
             <a href="#" className="text-gray-700 hover:text-blue-600 font-medium transition-colors drop-shadow-sm">redes</a>
           </nav>
 
