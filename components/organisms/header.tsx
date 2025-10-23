@@ -1,7 +1,7 @@
-// components/organisms/header.tsx
 "use client";
 import React from "react";
 import Image from "next/image";
+import Link from "next/link";
 
 export default function Header() {
   return (
@@ -36,16 +36,17 @@ export default function Header() {
 
           {/* Navegación */}
           <nav className="hidden md:flex space-x-8">
-            <a href="home" className="text-gray-700 hover:text-blue-600 font-medium transition-colors drop-shadow-sm">Home</a>
-            <a href="#" className="text-gray-700 hover:text-blue-600 font-medium transition-colors drop-shadow-sm">Categorias</a>
-            <a href="aqualog" className="text-gray-700 hover:text-blue-600 font-medium transition-colors drop-shadow-sm">Aqualog</a>
-            <a href="pecera" className="text-gray-700 hover:text-blue-600 font-medium transition-colors drop-shadow-sm">Mi pecera</a>
-            <a href="#" className="text-gray-700 hover:text-blue-600 font-medium transition-colors drop-shadow-sm">redes</a>
+            <Link href="/home" className="text-gray-700 hover:text-blue-600 font-medium transition-colors drop-shadow-sm">Home</Link>
+            <Link href="/categorias" className="text-gray-700 hover:text-blue-600 font-medium transition-colors drop-shadow-sm">Categorias</Link>
+            <Link href="/aqualog" className="text-gray-700 hover:text-blue-600 font-medium transition-colors drop-shadow-sm">Aqualog</Link>
+            <Link href="/fishbowl" className="text-gray-700 hover:text-blue-600 font-medium transition-colors drop-shadow-sm">Pecera</Link>
+            <Link href="/redes" className="text-gray-700 hover:text-blue-600 font-medium transition-colors drop-shadow-sm">redes</Link>
           </nav>
 
           {/* Iconos de acción */}
           <div className="flex items-center space-x-4">
             <button className="text-gray-700 hover:text-blue-600 transition-colors drop-shadow-sm">
+              
               <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
               </svg>
@@ -56,8 +57,10 @@ export default function Header() {
               </svg>
             </button>
             <button className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg transition-colors drop-shadow-md">
-              Sign In
-            </button>
+              <Link href="/login" className="text-white font-bold">
+                Sign In
+              </Link> 
+              </button>
           </div>
 
           {/* Menú móvil */}

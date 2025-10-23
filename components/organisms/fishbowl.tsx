@@ -1,5 +1,4 @@
-// app/pecera/page.tsx
-export default function Pecera() {
+export default function Fishbowl() {
   // Simulamos que el usuario ya tiene algunos peces
   const peces = [
     { nombre: "Goldfish", emoji: "🐠" },
