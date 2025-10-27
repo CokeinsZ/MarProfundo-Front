@@ -11,6 +11,10 @@ export function middleware(req: NextRequest) {
   if (pathname.startsWith("/fishbowl") && !isAuth) {
     return NextResponse.next();
   }
+  
+  if (pathname.startsWith("/profile") && !isAuth) {
+    return NextResponse.redirect(new URL("/login", req.url));
+  }
 
   return NextResponse.next();
 }
@@ -18,3 +22,5 @@ export function middleware(req: NextRequest) {
 export const config = {
   matcher: ["/fisbowl/:path*"], 
 };
+
+
