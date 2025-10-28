@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import axios from "axios";
 
 export interface Product {
   product_id: number;
@@ -16,32 +17,48 @@ export function useProductDetail(id: string) {
   const [errorMsg, setErrorMsg] = useState("");
 
   useEffect(() => {
+    const controller = new AbortController();
     const fetchData = async () => {
       try {
         setLoading(true);
         setErrorMsg("");
 
-        // Simula retardo de red (ej. llamada fetch)
-        await new Promise((resolve) => setTimeout(resolve, 1000));
+        if (!id) {
+          setProduct(null);
+          setErrorMsg("ID de producto inválido");
+          return;
+        }
 
-        // Producto ficticio de prueba
-        const fakeProduct: Product = {
-          product_id: parseInt(id) || 1,
-          name: "Cámara Profesional Canon EOS R6",
-          description:
-            "Cámara mirrorless de fotograma completo con sensor CMOS de 20MP, grabación 4K y estabilizador de imagen integrado. Ideal para fotografía profesional y video.",
-          price: 2299.99
+        const url = `http://back.mar-abierto.online/products/${id}`;
+        const { data } = await axios.get(url, { signal: controller.signal });
+
+        // Intento de mapeo flexible por si la API cambia nombres
+        const mapped: Product = {
+          product_id:
+            Number(data?.product_id ?? data?.id ?? id) || parseInt(id, 10) || 0,
+          name: String(data?.name ?? data?.title ?? "Producto"),
+          description: data?.description ?? data?.details ?? "",
+          price: Number(data?.price ?? data?.amount ?? 0),
+          img: data?.img ?? data?.image ?? data?.thumbnail ?? undefined
         };
 
-        setProduct(fakeProduct);
-      } catch (error) {
-        setErrorMsg("Error al cargar el producto" + error);
+        setProduct(mapped);
+      } catch (error: unknown) {
+        if (axios.isCancel(error)) return; // solicitud cancelada
+        const message =
+          (axios.isAxiosError(error)
+            ? error.response?.data?.message || error.message
+            : (error as Error)?.message) || "Error desconocido";
+        setErrorMsg("Error al cargar el producto: " + message);
+        setProduct(null);
       } finally {
         setLoading(false);
       }
     };
 
     fetchData();
+
+    return () => controller.abort();
   }, [id]);
 
   return { product, loading, errorMsg };
