@@ -21,7 +21,6 @@ export default function Register() {
   const { registerUser, user, loading, mensaje } = useRegister();
 
   const onSubmit: SubmitHandler<RegisterDTO> = (data) => {
-    // mapear RegisterDTO a User (user_id requerido en la interfaz)
     const payload: User = {
       user_id: 0,
       name: data.name,

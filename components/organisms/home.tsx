@@ -1,3 +1,4 @@
+import FishesPromo from "@/components/molecules/FishesPromo";
 export default function Home() {
   return (
     <div className="min-h-screen">
@@ -83,6 +84,13 @@ export default function Home() {
               </div>
             </div>
           </div>
+        </div>
+      </section>
+
+      {/* FishesPromo */}
+      <section className="bg-gray-100 py-16">
+        <div className="container mx-auto px-6">
+          <FishesPromo />
         </div>
       </section>
     </div>

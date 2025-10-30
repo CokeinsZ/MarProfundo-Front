@@ -31,7 +31,9 @@ export default function Header() {
                 className="object-contain -mt-2"
               />
             </div>
-            <span className="text-xl font-bold text-gray-800 drop-shadow-sm">MAR ABIERTO</span>
+            <Link href="/home">
+              <span className="text-xl font-bold text-gray-800 drop-shadow-sm">MAR ABIERTO</span>
+            </Link>
           </div>
 
           {/* Navegación */}

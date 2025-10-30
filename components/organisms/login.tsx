@@ -8,6 +8,7 @@ import CraftyInput from "@/components/atoms/craftyInput";
 import { useLogin } from "@/hooks/useLogin";
 import { LoginScheme } from "@/schemas/login";
 import { LoginDTO } from "@/interfaces/user";
+import Link from "next/link";
 
 export default function Login() {
   const { loginUser, loading, mensaje } = useLogin();
@@ -23,15 +24,8 @@ export default function Login() {
 
   const onSubmit: SubmitHandler<LoginDTO> = async (data) => {
     const payload: LoginDTO = {
-      user_id: 0,
-      name: "",
-      last_name: "",
-      national_id: "",
       email: data.email,
       password: data.password,
-      phone: "",
-      address: "",
-      // status y rol opcionales
     };
 
     loginUser(payload);
@@ -57,6 +51,12 @@ export default function Login() {
           </div>
 
           {mensaje && <p className="text-red-600 text-sm">{mensaje}</p>}
+
+          <div>
+            <Link href="/register" className="w-full text-center text-blue-600 font-bold py-2 px-4 rounded-lg hover:text-blue-800 transition disabled:opacity-50">
+                No tienes cuenta? Regístrate
+            </Link>
+          </div>
 
           <button
             type="submit"

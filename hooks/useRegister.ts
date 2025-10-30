@@ -13,7 +13,7 @@ export function useRegister() {
       setLoading(true);
       setMensaje("");
 
-      const url = "http://back.mar-abierto.online/users";
+      const url = "http://back.mar-abierto.online/signup";
       const { data } = await axios.post(url, userdata, { signal: controller.signal });
 
       const mapped: User = {

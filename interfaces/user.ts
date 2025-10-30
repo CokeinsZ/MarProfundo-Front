@@ -11,7 +11,7 @@ export interface User {
   rol?:string
 }
 
-export interface RegisterDTO extends User {
+export interface RegisterDTO {
   name:string
   last_name:string
   national_id:string
@@ -22,7 +22,7 @@ export interface RegisterDTO extends User {
   status?:string
   rol?:string
 }
-export interface LoginDTO extends User{
+export interface LoginDTO{
   email: string
   password: string
 }
