@@ -1,12 +1,7 @@
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
 import { Product } from "@/interfaces/product";
-
-interface CartItem extends Product {
-  cantidad: number;
-  imagen?: string;
-  stock: number;
-}
+import { CartItem } from "@/interfaces/product";
 
 interface CartState {
   productos: CartItem[];

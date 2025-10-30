@@ -6,6 +6,11 @@ export interface Product {
   img?: string;
 }
 
+export interface CartItem extends Product {
+  cantidad: number;
+  stock: number;
+}
+
 export interface Warehouse_Product {
   warehouse_id: number;
   product_id: number;
