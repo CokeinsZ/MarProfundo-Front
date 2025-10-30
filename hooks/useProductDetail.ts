@@ -2,14 +2,7 @@
 
 import { useState, useEffect } from "react";
 import axios from "axios";
-
-export interface Product {
-  product_id: number;
-  name: string;
-  description?: string;
-  price: number;
-  img?: string;
-}
+import { Product } from "@/interfaces/product";
 
 export function useProductDetail(id: string) {
   const [product, setProduct] = useState<Product | null>(null);

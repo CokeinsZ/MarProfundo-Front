@@ -1,19 +1,18 @@
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
-export interface Producto {
-    
-  id: number;
-  nombre: string;
-  precio: number;
+import { Product } from "@/interfaces/product";
+
+interface CartItem extends Product {
   cantidad: number;
-  imagen?: string; 
+  imagen?: string;
+  stock: number;
 }
 
 interface CartState {
-  productos: Producto[];
-  addProducto: (p: Producto, imagen : string) => void;
-  removeProducto: (id: number) => void;
-  updateCantidad: (id: number, cantidad: number) => void;
+  productos: CartItem[];
+  addProducto: (p: Product, imagen: string | undefined, cantidad: number, stock: number) => void;
+  removeProducto: (product_id: number) => void;
+  updateCantidad: (product_id: number, cantidad: number) => void;
   clear: () => void;
 }
 
@@ -21,27 +20,50 @@ export const useCart = create<CartState>()(
   persist(
     (set) => ({
       productos: [],
-      addProducto: (p, imagen) =>
+
+      addProducto: (p, imagen, cantidad, stock) =>
         set((state) => {
-          const existente = state.productos.find((x) => x.id === p.id);
+          if (cantidad <= 0) return state;
+
+          const existente = state.productos.find(
+            (x) => x.product_id === p.product_id
+          );
+
           if (existente) {
+            const nuevaCantidad = Math.min(existente.cantidad + cantidad, existente.stock);
             return {
               productos: state.productos.map((x) =>
-                x.id === p.id ? { ...x, cantidad: x.cantidad + 1 } : x     ),
+                x.product_id === p.product_id ? { ...x, cantidad: nuevaCantidad } : x
+              ),
             };
           }
-          return { productos: [...state.productos, { ...p, imagen }] };
+
+          const cantidadInicial = Math.min(cantidad, stock);
+
+          return {
+            productos: [
+              ...state.productos,
+              { ...p, cantidad: cantidadInicial, imagen, stock },
+            ],
+          };
         }),
-      removeProducto: (id) =>
+
+      removeProducto: (product_id) =>
         set((state) => ({
-          productos: state.productos.filter((x) => x.id !== id),
+          productos: state.productos.filter((x) => x.product_id !== product_id),
         })),
-      updateCantidad: (id, cantidad) =>
+
+      updateCantidad: (product_id, cantidad) =>
         set((state) => ({
-          productos: state.productos.map((x) =>
-            x.id === id ? { ...x, cantidad } : x
-          ),
+          productos: state.productos
+            .map((x) => {
+              if (x.product_id !== product_id) return x;
+              const nueva = Math.min(Math.max(0, cantidad), x.stock);
+              return { ...x, cantidad: nueva };
+            })
+            .filter((x) => x.cantidad > 0), 
         })),
+
       clear: () => set({ productos: [] }),
     }),
     {

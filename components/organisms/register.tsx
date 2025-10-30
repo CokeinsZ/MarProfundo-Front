@@ -1,103 +1,120 @@
 "use client";
-import { useState } from "react";
-import CraftyInput from "../atoms/craftyInput";
+
+import React from "react";
+import { useForm, SubmitHandler } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { RegisterSchema } from "@/schemas/register";
+import { RegisterDTO, User } from "@/interfaces/user";
+import { useRegister } from "@/hooks/useRegister";
+import CraftyInput from "@/components/atoms/craftyInput";
+
 export default function Register() {
-  const [formData, setFormData] = useState({
-    nombre: "",
-    apellido: "",
-    correo: "",
-    numero: "",
-    contrasena: "",
-    pais: "",
-    edad: "",
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors },
+  } = useForm<RegisterDTO>({
+    resolver: zodResolver(RegisterSchema),
   });
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value,
-    });
-  };
+  const { registerUser, user, loading, mensaje } = useRegister();
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    console.log("Datos enviados:", formData);
-    alert("✅ Registro enviado (aún no guarda en base de datos)");
+  const onSubmit: SubmitHandler<RegisterDTO> = (data) => {
+    // mapear RegisterDTO a User (user_id requerido en la interfaz)
+    const payload: User = {
+      user_id: 0,
+      name: data.name,
+      last_name: data.last_name,
+      national_id: data.national_id,
+      email: data.email,
+      password: data.password,
+      phone: data.phone,
+      address: data.address,
+      status: data.status ?? "activo",
+      rol: data.rol ?? "usuario",
+    };
+
+    registerUser(payload);
+    reset();
   };
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-b from-blue-100 to-blue-300 py-12">
       <div className="bg-white shadow-lg rounded-2xl w-full max-w-md p-8">
-        <h1 className="text-3xl font-bold text-center text-blue-800 mb-6">
-          📝 Registro
-        </h1>
+        <h1 className="text-3xl font-bold text-center text-blue-800 mb-6">📝 Registro</h1>
 
-        <form onSubmit={handleSubmit} className="space-y-4">
+        <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
           {/* Nombre */}
           <div>
-            <CraftyInput placeholder="Nombre" />
+            <label className="block text-gray-700 mb-1">Nombre</label>
+            <CraftyInput {...register("name")} placeholder="Nombre" />
+            {errors.name && <p className="text-red-600 text-sm">{String(errors.name.message)}</p>}
           </div>
 
           {/* Apellido */}
           <div>
-            <CraftyInput placeholder="Apellido" />
+            <label className="block text-gray-700 mb-1">Apellido</label>
+            <CraftyInput {...register("last_name")} placeholder="Apellido" />
+            {errors.last_name && <p className="text-red-600 text-sm">{String(errors.last_name.message)}</p>}
           </div>
 
           {/* Correo */}
           <div>
-            <CraftyInput placeholder="Correo" />
-
+            <label className="block text-gray-700 mb-1">Correo</label>
+            <CraftyInput {...register("email")} placeholder="Correo" />
+            {errors.email && <p className="text-red-600 text-sm">{String(errors.email.message)}</p>}
           </div>
 
           {/* Número */}
           <div>
-            <CraftyInput placeholder="Número" />
+            <label className="block text-gray-700 mb-1">Número</label>
+            <CraftyInput {...register("phone")} placeholder="Número" />
+            {errors.phone && <p className="text-red-600 text-sm">{String(errors.phone.message)}</p>}
+          </div>
+
+          {/* Identificación */}
+          <div>
+            <label className="block text-gray-700 mb-1">Documento</label>
+            <CraftyInput {...register("national_id")} placeholder="Documento" />
+            {errors.national_id && <p className="text-red-600 text-sm">{String(errors.national_id.message)}</p>}
+          </div>
+
+          {/* Dirección */}
+          <div>
+            <label className="block text-gray-700 mb-1">Dirección</label>
+            <CraftyInput {...register("address")} placeholder="Dirección" />
+            {errors.address && <p className="text-red-600 text-sm">{String(errors.address.message)}</p>}
           </div>
 
           {/* Contraseña */}
           <div>
-            <CraftyInput placeholder="Contraseña" />
+            <label className="block text-gray-700 mb-1">Contraseña</label>
+            <CraftyInput {...register("password")} placeholder="Contraseña" />
+            {errors.password && <p className="text-red-600 text-sm">{String(errors.password.message)}</p>}
           </div>
 
-          {/* País */}
+          {/* Estado */}
           <div>
-            <label className="block text-gray-700 mb-1">País</label>
-            <select
-              name="pais"
-              value={formData.pais}
-              onChange={handleChange}
-              className="w-full px-4 py-2 border rounded-lg focus:ring focus:ring-blue-300"
-              required
-            >
-              <option value="">Seleccione un país</option>
-              <option value="Colombia">Colombia</option>
-              <option value="México">México</option>
-              <option value="Argentina">Argentina</option>
-              <option value="España">España</option>
-              <option value="Chile">Chile</option>
+            <label className="block text-gray-700 mb-1">Estado</label>
+            <select {...register("status")} className="w-full px-4 py-2 border rounded-lg focus:ring focus:ring-blue-300">
+              <option value="activo">Activo</option>
+              <option value="inactivo">Inactivo</option>
             </select>
+            {errors.status && <p className="text-red-600 text-sm">{String(errors.status.message)}</p>}
           </div>
 
-          {/* Edad */}
-          <div>
-            <label className="block text-gray-700 mb-1">Edad</label>
-            <input
-              type="number"
-              name="edad"
-              value={formData.edad}
-              onChange={handleChange}
-              className="w-full px-4 py-2 border rounded-lg focus:ring focus:ring-blue-300"
-              required
-              min="1"
-            />
-          </div>
+          {/* Mensajes */}
+          {mensaje && <p className="text-red-600 text-sm">{mensaje}</p>}
+          {user && <p className="text-green-600 text-sm">Usuario registrado correctamente.</p>}
 
           {/* Botón */}
           <button
             type="submit"
-            className="w-full bg-blue-600 text-white font-bold py-2 px-4 rounded-lg hover:bg-blue-700 transition"
+            disabled={loading}
+            className="w-full bg-blue-600 text-white font-bold py-2 px-4 rounded-lg hover:bg-blue-700 transition disabled:opacity-50"
           >
-            Registrarme
+            {loading ? "Registrando..." : "Registrarme"}
           </button>
         </form>
       </div>
