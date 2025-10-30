@@ -1,76 +1,73 @@
+// ...existing code...
 "use client";
-import { useState } from "react";
+
+import React from "react";
+import { useForm, SubmitHandler } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import CraftyInput from "@/components/atoms/craftyInput";
+import { useLogin } from "@/hooks/useLogin";
+import { LoginScheme } from "@/schemas/login";
+import { LoginDTO } from "@/interfaces/user";
 
 export default function Login() {
-  const [formData, setFormData] = useState({
-    correo: "",
-    contrasena: "",
+  const { loginUser, loading, mensaje } = useLogin();
+
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors },
+  } = useForm<LoginDTO>({
+    resolver: zodResolver(LoginScheme),
   });
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value,
-    });
-  };
+  const onSubmit: SubmitHandler<LoginDTO> = async (data) => {
+    const payload: LoginDTO = {
+      user_id: 0,
+      name: "",
+      last_name: "",
+      national_id: "",
+      email: data.email,
+      password: data.password,
+      phone: "",
+      address: "",
+      // status y rol opcionales
+    };
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    console.log("Intento de login:", formData);
-    alert("✅ Login enviado (aún no autenticado)");
+    loginUser(payload);
+    reset();
   };
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-b from-blue-100 to-blue-300 py-12">
       <div className="bg-white shadow-lg rounded-2xl w-full max-w-md p-8">
-        <h1 className="text-3xl font-bold text-center text-blue-800 mb-6">
-          🔐 Iniciar Sesión
-        </h1>
+        <h1 className="text-3xl font-bold text-center text-blue-800 mb-6">🔐 Iniciar sesión</h1>
 
-        <form onSubmit={handleSubmit} className="space-y-4">
-          {/* Correo */}
+        <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
           <div>
             <label className="block text-gray-700 mb-1">Correo</label>
-            <input
-              type="email"
-              name="correo"
-              value={formData.correo}
-              onChange={handleChange}
-              className="w-full px-4 py-2 border rounded-lg focus:ring focus:ring-blue-300"
-              required
-            />
+            <CraftyInput {...register("email")} placeholder="Correo" />
+            {errors.email && <p className="text-red-600 text-sm">{String(errors.email?.message)}</p>}
           </div>
 
-          {/* Contraseña */}
           <div>
             <label className="block text-gray-700 mb-1">Contraseña</label>
-            <input
-              type="password"
-              name="contrasena"
-              value={formData.contrasena}
-              onChange={handleChange}
-              className="w-full px-4 py-2 border rounded-lg focus:ring focus:ring-blue-300"
-              required
-            />
+            <CraftyInput {...register("password")} placeholder="Contraseña" />
+            {errors.password && <p className="text-red-600 text-sm">{String(errors.password?.message)}</p>}
           </div>
 
-          {/* Botón */}
+          {mensaje && <p className="text-red-600 text-sm">{mensaje}</p>}
+
           <button
             type="submit"
-            className="w-full bg-blue-600 text-white font-bold py-2 px-4 rounded-lg hover:bg-blue-700 transition"
+            disabled={loading}
+            className="w-full bg-blue-600 text-white font-bold py-2 px-4 rounded-lg hover:bg-blue-700 transition disabled:opacity-50"
           >
-            Iniciar Sesión
+            {loading ? "Iniciando..." : "Iniciar sesión"}
           </button>
-
-          {/* Enlace a registro */}
-          <p className="text-center text-gray-600 mt-2">
-            ¿No tienes cuenta?{" "}
-            <a href="/register" className="text-blue-600 font-semibold hover:underline">
-              Regístrate aquí
-            </a>
-          </p>
         </form>
       </div>
     </div>
   );
 }
+// ...existing code...
