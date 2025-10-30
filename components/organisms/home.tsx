@@ -1,36 +1,12 @@
 import FishesPromo from "@/components/molecules/FishesPromo";
+import Pcategories from "../molecules/Pcategories";
+
 export default function Home() {
   return (
     <div className="min-h-screen">
       {/* Sección de Categorías */}
       <section className="py-16">
-        <div className="container mx-auto px-6">
-          <h2 className="text-3xl font-bold text-center text-gray-800 mb-12">
-            Nuestras Categorías
-          </h2>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {/* Card Cañas */}
-            <div className="bg-white rounded-xl shadow-md p-6 text-center hover:shadow-lg transition-shadow">
-              <div className="text-4xl text-blue-600 mb-4">🎣</div>
-              <h3 className="text-xl font-semibold text-gray-800 mb-2">Cañas</h3>
-              <p className="text-gray-600">Cañas profesionales para todo tipo de pesca</p>
-            </div>
-
-            {/* Card Señuelos */}
-            <div className="bg-white rounded-xl shadow-md p-6 text-center hover:shadow-lg transition-shadow">
-              <div className="text-4xl text-blue-600 mb-4">🐟</div>
-              <h3 className="text-xl font-semibold text-gray-800 mb-2">Señuelos</h3>
-              <p className="text-gray-600">Señuelos artificiales de alta calidad</p>
-            </div>
-
-            {/* Card Acuarofilia */}
-            <div className="bg-white rounded-xl shadow-md p-6 text-center hover:shadow-lg transition-shadow">
-              <div className="text-4xl text-blue-600 mb-4">🐠</div>
-              <h3 className="text-xl font-semibold text-gray-800 mb-2">Mi Pecera</h3>
-              <p className="text-gray-600">Todo para tu acuario y peces ornamentales</p>
-            </div>
-          </div>
-        </div>
+        <Pcategories />
       </section>
 
       {/* Sección Destacados */}
@@ -89,9 +65,7 @@ export default function Home() {
 
       {/* FishesPromo */}
       <section className="bg-gray-100 py-16">
-        <div className="container mx-auto px-6">
           <FishesPromo />
-        </div>
       </section>
     </div>
   );
