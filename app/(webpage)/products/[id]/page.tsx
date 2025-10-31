@@ -1,4 +1,3 @@
-
 import ProductDetails from "@/components/molecules/productDetails";
 
 interface PageProps {

@@ -49,6 +49,7 @@ export function useProductDetail(id: string) {
       }
     };
 
+
     fetchData();
 
     return () => controller.abort();

@@ -2,6 +2,7 @@
 import React from "react";
 import { useCategories } from "@/hooks/usePCategories";
 import { PCategory } from "@/interfaces/pCategory";
+import Link from "next/link";
 
 function emojiForCategory(name: string) {
   const n = name.toLowerCase();
@@ -25,7 +26,7 @@ export default function Pcategories() {
         { pcategory_id: 0, name: "Cañas" },
         { pcategory_id: 1, name: "Señuelos y carnadas" },
         { pcategory_id: 2, name: "Mi Pecera" },
-      ]; // fallback simple list
+      ]; 
 
   return (
     <div className="container mx-auto px-6">
@@ -39,15 +40,10 @@ export default function Pcategories() {
             key={cat.pcategory_id}
             className="bg-white rounded-xl shadow-md p-6 text-center hover:shadow-lg transition-shadow"
           >
-            <div className="text-4xl text-blue-600 mb-4">{emojiForCategory(cat.name)}</div>
-            <h3 className="text-xl font-semibold text-gray-800 mb-2">{cat.name}</h3>
-            <p className="text-gray-600">
-              {cat.name === "Cañas" && "Cañas profesionales para todo tipo de pesca"}
-              {cat.name === "Señuelos y carnadas" && "Señuelos artificiales y carnadas de alta calidad"}
-              {cat.name === "Alimentos para peces" && "Alimentos completos para todos tus peces"}
-              {cat.name === "Filtros" && "Sistemas de filtración para acuarios y estanques"}
-              {!["Cañas","Señuelos y carnadas","Alimentos para peces","Filtros"].includes(cat.name) && "Explora productos y accesorios de esta categoría"}
-            </p>
+            <Link href={`/pCategories/${cat.name}`}>
+              <div className="text-4xl text-blue-600 mb-4">{emojiForCategory(cat.name)}</div>
+              <h3 className="text-xl font-semibold text-gray-800 mb-2">{cat.name}</h3>
+            </Link>
           </div>
         ))}
       </div>
