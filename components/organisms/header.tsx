@@ -39,7 +39,7 @@ export default function Header() {
           {/* Navegación */}
           <nav className="hidden md:flex space-x-8">
             <Link href="/home" className="text-gray-700 hover:text-blue-600 font-medium transition-colors drop-shadow-sm">Home</Link>
-            <Link href="/PCategories" className="text-gray-700 hover:text-blue-600 font-medium transition-colors drop-shadow-sm">Categorias</Link>
+            <Link href="/pCategories" className="text-gray-700 hover:text-blue-600 font-medium transition-colors drop-shadow-sm">Categorias</Link>
             <Link href="/aqualog" className="text-gray-700 hover:text-blue-600 font-medium transition-colors drop-shadow-sm">Aqualog</Link>
             <Link href="/fishbowl" className="text-gray-700 hover:text-blue-600 font-medium transition-colors drop-shadow-sm">Pecera</Link>
             <Link href="/redes" className="text-gray-700 hover:text-blue-600 font-medium transition-colors drop-shadow-sm">redes</Link>
