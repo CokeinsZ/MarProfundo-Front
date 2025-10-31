@@ -1,9 +1,11 @@
 import { useState } from "react";
 import { Product } from "@/interfaces/product";
 import axios from "axios";
+import { PCategory } from "@/interfaces/pCategory";
 
 export function useCategoryProducts() {
   const [productos, setProductos] = useState< Product[] | null>(null);
+  const [pCategory, setPCategory] = useState<PCategory | null>(null);
   const [mensaje, setMensaje] = useState("");
   const [loading, setLoading] = useState(false);
 
@@ -13,10 +15,12 @@ export function useCategoryProducts() {
       setLoading(true);
       setMensaje("");
 
-      const url = "http://back.mar-abierto.online/products/filter/category";
-      const { data } = await axios.post(url, category, { signal: controller.signal });
+      const url = `http://back.mar-abierto.online/product-pcategory/by-pcategory/${category}`;
+      const { data } = await axios.get(url, { signal: controller.signal });
 
-      const mapped: Product[] = data?.map((item: Product) => ({
+      console.log("Category Products data:", data);
+
+      const mapped: Product[] = data?.products.map((item: Product) => ({
         product_id: Number(item?.product_id ?? 0),
         name: String(item?.name ?? "Nombre"),
         description: String(item?.description ?? "Descripción"),
@@ -25,6 +29,10 @@ export function useCategoryProducts() {
       }));
 
       setProductos(mapped);
+      setPCategory({
+        pcategory_id: data?.category.pcategory_id,
+        name: data?.category.name,
+      });
     } catch (error: unknown) {
       if (axios.isCancel(error)) return;
       const message =
@@ -38,5 +46,5 @@ export function useCategoryProducts() {
     }
   };
 
-  return { fetchData, productos, loading, mensaje };
+  return { fetchData, productos, pCategory, loading, mensaje };
 }

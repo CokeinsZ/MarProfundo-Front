@@ -40,7 +40,7 @@ export default function Pcategories() {
             key={cat.pcategory_id}
             className="bg-white rounded-xl shadow-md p-6 text-center hover:shadow-lg transition-shadow"
           >
-            <Link href={`/pCategories/${cat.name}`}>
+            <Link href={`/pCategories/${cat.pcategory_id}`}>
               <div className="text-4xl text-blue-600 mb-4">{emojiForCategory(cat.name)}</div>
               <h3 className="text-xl font-semibold text-gray-800 mb-2">{cat.name}</h3>
             </Link>

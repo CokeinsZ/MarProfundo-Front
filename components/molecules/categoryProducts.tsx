@@ -7,17 +7,17 @@ import { Product } from "@/interfaces/product";
 type Props = { category: string };
 
 export default function CategoryProducts({ category }: Props) {
-  const { fetchData, productos, loading, mensaje } = useCategoryProducts();
+  const { fetchData, productos, pCategory, loading, mensaje } = useCategoryProducts();
 
   useEffect(() => {
     if (!category) return;
     fetchData(category);
-  }, [category, fetchData]);
+  }, []);
 
   return (
     <div className="container mx-auto px-6">
       <h2 className="text-3xl font-bold text-center text-gray-800 mb-8">
-        Productos en {category}
+        Productos en {pCategory?.name}
       </h2>
 
       {loading && <p className="text-center text-gray-600">Cargando productos...</p>}

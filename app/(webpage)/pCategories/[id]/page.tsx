@@ -1,16 +1,16 @@
 import CategoryProducts from "@/components/molecules/categoryProducts";
 
 interface PageProps {
-  params: { category: string } | Promise<{ category: string }>;
+  params: { id: string } | Promise<{ id: string }>;
 }
 
 export default async function Page({ params }: PageProps) {
   const resolved = await params;
-  const { category } = resolved;
+  const { id } = resolved;
 
   return (
     <>
-      <CategoryProducts category={category} />
+      <CategoryProducts category={id} />
     </>
   );
 }
