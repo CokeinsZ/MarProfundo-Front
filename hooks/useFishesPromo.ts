@@ -17,6 +17,8 @@ export function useFishesPromo() {
         const url = "http://back.mar-abierto.online/fishes";
         const { data } = await axios.get(url, { signal: controller.signal });
 
+        console.log("Fishes data:", data);
+
         const mapped: Fish[] = data?.map((item: Fish) => ({
             fish_id: Number(item?.fish_id ?? 0),
             common_name: String(item?.common_name ?? "Nombre"),

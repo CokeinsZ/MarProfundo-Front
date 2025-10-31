@@ -10,30 +10,36 @@ export function useCategories() {
   useEffect(() => {
     const controller = new AbortController();
     const fetchData = async () => {
-        try {
+      try {
         setLoading(true);
         setMensaje("");
 
         const url = "http://back.mar-abierto.online/pcategories";
-        const { data } = await axios.get(url, { signal: controller.signal });
+        const { data } = await axios.get(url, {
+          data: {
+            "max": 99,
+            "page": 1
+          }, 
+          signal: controller.signal
+        });
 
         const mapped: PCategory[] = data?.map((item: PCategory) => ({
-            pcategory_id: Number(item?.pcategory_id ?? 0),
-            name: String(item?.name ?? "Nombre"),
+          pcategory_id: Number(item?.pcategory_id ?? 0),
+          name: String(item?.name ?? "Nombre"),
         }));
 
         setPCategories(mapped);
-        } catch (error: unknown) {
+      } catch (error: unknown) {
         if (axios.isCancel(error)) return;
         const message =
-            (axios.isAxiosError(error)
+          (axios.isAxiosError(error)
             ? error.response?.data?.message || error.message
             : (error as Error)?.message) || "Error desconocido";
         setMensaje("Error al registrar: " + message);
-        } finally {
+      } finally {
         setLoading(false);
         controller.abort();
-        }
+      }
     };
     fetchData();
 

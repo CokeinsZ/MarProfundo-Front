@@ -13,20 +13,25 @@ export function useRegister() {
       setLoading(true);
       setMensaje("");
 
-      const url = "http://back.mar-abierto.online/signup";
+      const url = "http://back.mar-abierto.online/users/signup";
       const { data } = await axios.post(url, userdata, { signal: controller.signal });
 
+      if (!data) {
+        setMensaje("Error en la respuesta del servidor.");
+        return;
+      }
+
       const mapped: User = {
-        user_id: Number(data?.user_id ?? data?.id ?? 0),
-        name: String(data?.name ?? data?.title ?? "Usuario"),
-        last_name: String(data?.last_name ?? data?.lastname ?? "Usuario"),
-        national_id: String(data?.national_id ?? data?.id ?? "0"),
-        email: String(data?.email ?? "usuario@example.com"),
-        password: String(data?.password ?? "123456"),
-        phone: String(data?.phone ?? "123456789"),
-        address: String(data?.address ?? "Calle 123, 123"),
-        status: String(data?.status ?? "activo"),
-        rol: String(data?.rol ?? "usuario"),
+        user_id: Number(data?.user.user_id ?? 0),
+        name: String(data?.user.name ?? ""),
+        last_name: String(data?.user.last_name ?? ""),
+        national_id: String(data?.user.national_id ?? "0"),
+        email: String(data?.user.email ?? ""),
+        password: String(""), // No devolver la contraseña
+        phone: String(data?.user.phone ?? ""),
+        address: String(data?.user.address ?? ""),
+        status: String(data?.user.status ?? ""),
+        role: String(data?.user.role ?? "usuario"),
       };
 
       setUser(mapped);

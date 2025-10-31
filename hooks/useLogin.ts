@@ -6,6 +6,7 @@ export function useLogin() {
   const [loading, setLoading] = useState(false);
   const [mensaje, setMensaje] = useState<string | null>(null);
   const [token, setToken] = useState<string | null>(null);
+  const [role, setRole] = useState<string | null>(null);
 
   const loginUser = async (credentials: LoginDTO) => {
     const controller = new AbortController();
@@ -13,22 +14,28 @@ export function useLogin() {
       setLoading(true);
       setMensaje(null);
 
-      const url = "http://back.mar-abierto.online/login"; // ajusta si tu endpoint es distinto
+      const url = "http://back.mar-abierto.online/users/login";
       const { data } = await axios.post(url, credentials, { signal: controller.signal });
 
-      // Intentar extraer token desde varias posibles claves
-      const accessToken = data?.accessToken ?? data?.token ?? data?.access_token ?? null;
-
-      if (!accessToken) {
-        setMensaje("Respuesta de login sin token.");
+      if (!data) {
+        setMensaje("Error en la respuesta del servidor.");
         return null;
       }
 
-      // Guardar cookie simple (no HttpOnly). Si necesitas HttpOnly, debe establecerla el backend.
+      // Intentar extraer información del usuario
+      const accessToken = data.token ?? null;
+      const role = data.role ?? null;
+
+      if (!accessToken || !role) {
+        setMensaje("Error en la respuesta del servidor.");
+        return null;
+      }
+
       const maxAge = 60 * 60 * 24 * 7; // 7 días
       document.cookie = `accessToken=${accessToken}; Path=/; Max-Age=${maxAge}; SameSite=Lax; Secure`;
 
       setToken(String(accessToken));
+      setRole(data?.role ? String(data.role) : null);
       return accessToken;
     } catch (error: unknown) {
       const message =
@@ -43,5 +50,5 @@ export function useLogin() {
     }
   };
 
-  return { loginUser, loading, mensaje, token };
+  return { loginUser, loading, mensaje, token, role };
 }

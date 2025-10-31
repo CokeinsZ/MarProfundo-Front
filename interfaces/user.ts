@@ -1,5 +1,5 @@
 export interface User {
-  user_id:number
+  user_id?:number
   name:string
   last_name:string
   national_id:string
@@ -8,7 +8,7 @@ export interface User {
   phone:string
   address:string
   status?:string
-  rol?:string
+  role?:string
 }
 
 export interface RegisterDTO {
