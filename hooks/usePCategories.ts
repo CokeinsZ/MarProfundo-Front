@@ -14,7 +14,7 @@ export function useCategories() {
         setLoading(true);
         setMensaje("");
 
-        const url = "http://back.mar-abierto.online/pcategories";
+        const url = "https://back.mar-abierto.online/pcategories";
         const { data } = await axios.get(url, {
           data: {
             "max": 99,
