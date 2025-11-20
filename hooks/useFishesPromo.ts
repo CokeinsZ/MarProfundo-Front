@@ -14,7 +14,7 @@ export function useFishesPromo() {
         setLoading(true);
         setMensaje("");
 
-        const url = "http://back.mar-abierto.online/fishes";
+        const url = "https://back.mar-abierto.online/fishes";
         const { data } = await axios.get(url, { signal: controller.signal });
 
         console.log("Fishes data:", data);
