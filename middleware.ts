@@ -20,7 +20,7 @@ export function middleware(req: NextRequest) {
 }
 
 export const config = {
-  matcher: ["/fisbowl/:path*"], 
+  matcher: ["/fisbowl/:path*,/profile/:path*"],
 };
 
 

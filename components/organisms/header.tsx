@@ -1,9 +1,19 @@
 "use client";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
+// ...existing code...
 
 export default function Header() {
+  const [hasToken, setHasToken] = useState(false);
+
+  useEffect(() => {
+    // Leer cookie accessToken en el cliente
+    if (typeof document === "undefined") return;
+    const cookies = document.cookie.split("; ").find((c) => c.startsWith("accessToken="));
+    setHasToken(!!cookies);
+  }, []);
+
   return (
     <header className="sticky top-0 z-50">
       {/* Contenedor del fondo con la imagen de papel */}
@@ -60,11 +70,26 @@ export default function Header() {
                 </svg>
               </Link>
             </button>
-            <button className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg transition-colors drop-shadow-md">
-              <Link href="/login" className="text-white font-bold">
-                Login
-              </Link> 
+
+            {/* Condicional Login / Perfil */}
+            {hasToken ? (
+              <Link
+                href="/profile"
+                className="flex items-center bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-lg transition-colors drop-shadow-md"
+              >
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                  <path d="M10 10a4 4 0 100-8 4 4 0 000 8z" />
+                  <path fillRule="evenodd" d="M.458 18.042A9 9 0 1118.042 1.958 9 9 0 01.458 18.042zm9.544-2.29a6.5 6.5 0 00-5.656-3.752 8 8 0 0111.416 0 6.5 6.5 0 00-5.76 3.752z" clipRule="evenodd" />
+                </svg>
+                <span className="ml-2 font-bold">Perfil</span>
+              </Link>
+            ) : (
+              <button className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg transition-colors drop-shadow-md">
+                <Link href="/login" className="text-white font-bold">
+                  Login
+                </Link> 
               </button>
+            )}
           </div>
 
           {/* Menú móvil */}
@@ -78,3 +103,4 @@ export default function Header() {
     </header>
   );
 }
+// ...existing code...

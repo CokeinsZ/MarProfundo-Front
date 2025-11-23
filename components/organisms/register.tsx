@@ -31,7 +31,7 @@ export default function Register() {
       phone: data.phone,
       address: data.address,
       status: data.status ?? "activo",
-      rol: data.rol ?? "usuario",
+      role: data.rol ?? "usuario",
     };
 
     registerUser(payload);

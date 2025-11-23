@@ -77,11 +77,7 @@ export default function ProductDetails({ id }: Props) {
                 En stock
               </span>
               <button
-                className="px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg shadow-md text-sm transition-all"
-                onClick={() => {
-                  alert(`${product.name} añadido al carrito`);
-                }}
-              >
+                className="px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg shadow-md text-sm transition-all">
                 Añadir al carrito
               </button>
             </div>
