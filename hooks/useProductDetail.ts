@@ -22,7 +22,7 @@ export function useProductDetail(id: string) {
           return;
         }
 
-        const url = `http://back.mar-abierto.online/products/${id}`;
+        const url = `https://back.mar-abierto.online/products/${id}`;
         const { data } = await axios.get(url, { signal: controller.signal });
 
         // Intento de mapeo flexible por si la API cambia nombres
