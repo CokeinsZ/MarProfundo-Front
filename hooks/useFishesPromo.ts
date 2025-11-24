@@ -1,3 +1,4 @@
+"use client";
 import { useEffect, useState } from "react";
 import { Fish } from "@/interfaces/fish";
 import axios from "axios";

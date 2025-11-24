@@ -1,10 +1,13 @@
+"use client";
+import React from "react";
+import Image from "next/image";
+import { useAqualog } from "@/hooks/useAqualog";
+
 export default function Fishbowl() {
-  // Simulamos que el usuario ya tiene algunos peces
-  const peces = [
-    { nombre: "Goldfish", emoji: "🐠" },
-    { nombre: "Betta", emoji: "🐟" },
-    { nombre: "Tetra Neón", emoji: "🐡" },
-  ];
+
+  const { fishesBowl, loading, mensaje } = useAqualog();
+
+  const peces = fishesBowl ?? [];
 
   const maximo = 20;
 
@@ -28,8 +31,18 @@ export default function Fishbowl() {
                 key={i}
                 className="flex flex-col items-center justify-center bg-gradient-to-tr from-blue-100 to-blue-200 rounded-xl shadow-md p-4 hover:scale-105 transition-transform"
               >
-                <span className="text-5xl mb-2">{pez.emoji}</span>
-                <p className="font-semibold text-gray-800">{pez.nombre}</p>
+                <Image
+                  src={pez.img}
+                  alt={pez.common_name}
+                  width={240}
+                  height={100}
+                  className="object-contain"
+                />
+                <p className="font-semibold text-gray-800">{pez.common_name}</p>
+                <p className="text-gray-600">📍 {pez.habitat}</p>
+                <p className="text-gray-600">🌎 {pez.origin}</p>
+                <p className="text-gray-600">💰 {pez.weight}</p>
+                <p className="text-gray-600">📏 {pez.size}</p>
               </div>
             ))}
 
