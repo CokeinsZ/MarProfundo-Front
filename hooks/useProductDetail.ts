@@ -29,45 +29,24 @@ export function useProductDetail(id: string) {
         const data = productResp.data ?? {};
         
 
-        // Intento de mapeo flexible por si la API cambia nombres
         const mapped: Product = {
-          product_id:
-            Number(data?.product_id ?? data?.id ?? id) || parseInt(id, 10) || 0,
-          name: String(data?.name ?? data?.title ?? "Producto"),
-          description: data?.description ?? data?.details ?? "",
-          price: Number(data?.price ?? data?.amount ?? 0),
-          img: data?.img ?? data?.image ?? data?.thumbnail ?? undefined
+          product_id: data.product_id,
+          name: data.name,
+          description: data.description,
+          price: data.price,
+          img: data.img,
+          created_at: data.created_at,
+          updated_at: data.updated_at
         };
 
         setProduct(mapped);
-        const warehousesToQuery = [1,2 ]
-        const fetches = warehousesToQuery.map((wid) =>
-          axios
-            .get(`https://back.mar-abierto.online/warehouse-product/${wid}`, { signal: controller.signal })
-            .then((r) => ({ wid, data: r.data }))
-            .catch((e) => {
-              return { wid, data: [] };
-            })
+        
+        // Calcular stock total desde warehouses incluidos en la respuesta
+        const warehouses = data.warehouses || [];
+        const totalQuantity = warehouses.reduce(
+          (sum: number, wh: any) => sum + (Number(wh.stock) || 0),
+          0
         );
-        const results = await Promise.all(fetches);
-
-        const perWarehouse: Warehouse_Product[] = results.map(({ wid, data }: any) => {
-          const arr = Array.isArray(data) ? data : [];
-          const normalized = arr.map((it: any) => ({
-            warehouse_id: Number(it.warehouse_id ?? it.warehouseId ?? wid ?? 0),
-            product_id: Number(it.product_id ?? it.productId ?? it.id ?? 0),
-            quantity: Number(it.quantity ?? it.qty ?? 0)
-          }));
-
-          const found = normalized.find((n) => n.product_id === mapped.product_id);
-          return {
-            warehouse_id: wid,
-            product_id: mapped.product_id,
-            quantity: found ? (Number(found.quantity) || 0) : 0
-          };
-        });
-
-        const totalQuantity = perWarehouse.reduce((acc, cur) => acc + (Number(cur.quantity) || 0), 0);
 
         const totalWarehouseProduct: Warehouse_Product = {
           warehouse_id: 0 as unknown as number,
