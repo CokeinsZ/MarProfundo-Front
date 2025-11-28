@@ -17,7 +17,8 @@ export default function AdminSidebar() {
   const pathname = usePathname();
 
   return (
-    <aside className="w-64 bg-gray-900 text-white min-h-screen flex flex-col">
+    <aside className="w-64 bg-gray-900 text-white h-screen flex flex-col sticky top-0 overflow-y-auto">
+      {/* Contenido existente igual */}
       <div className="p-6">
         <h1 className="text-2xl font-bold text-blue-400">Mar Profundo</h1>
         <p className="text-sm text-gray-400 mt-1">Panel de Administración</p>
@@ -48,7 +49,7 @@ export default function AdminSidebar() {
         </ul>
       </nav>
 
-      <div className="p-4 border-t border-gray-800">
+      <div className="p-4 border-t border-gray-800 mt-auto">
         <button className="flex items-center space-x-3 px-4 py-3 w-full text-gray-300 hover:bg-gray-800 hover:text-white rounded-lg transition-colors">
           <LogOut size={20} />
           <span className="font-medium">Cerrar Sesión</span>
