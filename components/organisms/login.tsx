@@ -22,14 +22,19 @@ export default function Login() {
   });
 
   const onSubmit: SubmitHandler<LoginDTO> = async (data) => {
-    const payload: LoginDTO = {
-      email: data.email,
-      password: data.password,
-    };
-
-    loginUser(payload);
-    reset();
+  const payload: LoginDTO = {
+    email: data.email,
+    password: data.password,
   };
+
+  await loginUser(payload);
+  
+  setTimeout(() => {
+    window.location.href = "/home";
+  }, 1000);
+  
+  reset();
+};
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-b from-blue-100 to-blue-300 py-12">

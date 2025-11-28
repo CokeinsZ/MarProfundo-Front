@@ -8,11 +8,17 @@ export default function Header() {
   const [hasToken, setHasToken] = useState(false);
 
   useEffect(() => {
-    // Leer cookie accessToken en el cliente
+  const checkAuth = () => {
     if (typeof document === "undefined") return;
     const cookies = document.cookie.split("; ").find((c) => c.startsWith("accessToken="));
     setHasToken(!!cookies);
-  }, []);
+  };
+
+  checkAuth();
+  
+  window.addEventListener('storage', checkAuth);
+  return () => window.removeEventListener('storage', checkAuth);
+}, []);
 
   return (
     <header className="sticky top-0 z-50">
