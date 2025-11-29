@@ -1,7 +1,7 @@
 'use client';
 
 import Link from 'next/link';
-import { usePathname } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 import { LayoutDashboard, Package, ShoppingCart, Users, Fish, FolderTree, LogOut } from 'lucide-react';
 
 const menuItems = [
@@ -14,6 +14,12 @@ const menuItems = [
 
 export default function AdminSidebar() {
   const pathname = usePathname();
+  const router = useRouter();
+
+  const handleLogout = () => {
+    document.cookie = 'accessToken=; Path=/; Max-Age=0';
+    router.push('/home');
+  };
 
   return (
     <aside className="w-64 bg-gray-900 text-white h-screen flex flex-col sticky top-0 overflow-y-auto">
@@ -49,7 +55,10 @@ export default function AdminSidebar() {
       </nav>
 
       <div className="p-4 border-t border-gray-800 mt-auto">
-        <button className="flex items-center space-x-3 px-4 py-3 w-full text-gray-300 hover:bg-gray-800 hover:text-white rounded-lg transition-colors">
+        <button 
+          onClick={handleLogout}
+          className="flex items-center space-x-3 px-4 py-3 w-full text-gray-300 hover:bg-gray-800 hover:text-white rounded-lg transition-colors"
+        >
           <LogOut size={20} />
           <span className="font-medium">Cerrar Sesión</span>
         </button>
