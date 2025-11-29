@@ -15,10 +15,10 @@ export default function AdminLayout({
   return (
     <html lang="es">
       <body className="flex min-h-screen bg-gray-100">
-      <AdminSidebar />
-      <main className="flex-1">
-        {children}
-      </main>
+        <AdminSidebar />
+        <main className="flex-1">
+          {children}
+        </main>
       </body>
     </html>
   );
