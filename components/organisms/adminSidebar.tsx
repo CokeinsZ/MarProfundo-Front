@@ -9,8 +9,7 @@ const menuItems = [
   { name: 'Productos', href: '/admin/products', icon: Package },
   { name: 'Pedidos', href: '/admin/orders', icon: ShoppingCart },
   { name: 'Usuarios', href: '/admin/users', icon: Users },
-  { name: 'Categorías', href: '/admin/categories', icon: FolderTree },
-  { name: 'Aqualog', href: '/admin/aqualog', icon: Fish },
+  { name: 'Peces', href: '/admin/fishes', icon: Fish },
 ];
 
 export default function AdminSidebar() {
