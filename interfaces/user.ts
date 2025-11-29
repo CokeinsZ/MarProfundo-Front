@@ -7,8 +7,8 @@ export interface User {
   password?: string;
   phone: string;
   address: string;
-  status: string | 'not_verified' | 'active' | 'inactive' | 'banned';
-  role: string |'user' | 'admin';
+  status: 'not_verified' | 'active' | 'inactive' | 'banned';
+  role: 'user' | 'admin';
   created_at?: string;
   updated_at?: string;
 }
