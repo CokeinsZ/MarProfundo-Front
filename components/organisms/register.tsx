@@ -21,7 +21,7 @@ export default function Register() {
   const { registerUser, user, loading, mensaje } = useRegister();
 
   const onSubmit: SubmitHandler<RegisterDTO> = (data) => {
-    const payload: User = {
+    const payload = {
       user_id: 0,
       name: data.name,
       last_name: data.last_name,
@@ -30,8 +30,6 @@ export default function Register() {
       password: data.password,
       phone: data.phone,
       address: data.address,
-      status: data.status ?? "activo",
-      role: data.rol ?? "usuario",
     };
 
     registerUser(payload);
@@ -91,16 +89,6 @@ export default function Register() {
             <label className="block text-gray-700 mb-1">Contraseña</label>
             <CraftyInput {...register("password")} placeholder="Contraseña" />
             {errors.password && <p className="text-red-600 text-sm">{String(errors.password.message)}</p>}
-          </div>
-
-          {/* Estado */}
-          <div>
-            <label className="block text-gray-700 mb-1">Estado</label>
-            <select {...register("status")} className="w-full px-4 py-2 border rounded-lg focus:ring focus:ring-blue-300">
-              <option value="activo">Activo</option>
-              <option value="inactivo">Inactivo</option>
-            </select>
-            {errors.status && <p className="text-red-600 text-sm">{String(errors.status.message)}</p>}
           </div>
 
           {/* Mensajes */}

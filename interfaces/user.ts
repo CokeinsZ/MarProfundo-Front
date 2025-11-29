@@ -7,10 +7,20 @@ export interface User {
   password?: string;
   phone: string;
   address: string;
-  status: 'not_verified' | 'active' | 'inactive' | 'banned';
-  role: 'user' | 'admin';
+  status: string | 'not_verified' | 'active' | 'inactive' | 'banned';
+  role: string |'user' | 'admin';
   created_at?: string;
   updated_at?: string;
+}
+
+export interface UserRegister {
+  name: string;
+  last_name: string;
+  national_id: string;
+  email: string;
+  password?: string;
+  phone: string;
+  address: string;
 }
 
 export interface UserListItem {
