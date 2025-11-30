@@ -34,6 +34,7 @@ export default function Footer() {
                 <li><Link className="hover:text-blue-700" href="/categorias">Categorías</Link></li>
                 <li><Link className="hover:text-blue-700" href="/productos">Productos</Link></li>
                 <li><Link className="hover:text-blue-700" href="/contacto">Contacto</Link></li>
+                <li><Link className="hover:text-blue-700" href="/admin/dashboard">Admin Dashboard</Link></li>
               </ul>
             </div>
 

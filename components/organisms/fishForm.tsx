@@ -72,7 +72,7 @@ export default function FishFormComponent({ fish }: FishFormProps) {
                 id="common_name"
                 type="text"
                 {...register('common_name')}
-                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-gray-900"
                 placeholder="Ej: Trucha arcoíris"
               />
               {errors.common_name && <p className="text-red-600 text-sm mt-1">{errors.common_name.message}</p>}
@@ -86,7 +86,7 @@ export default function FishFormComponent({ fish }: FishFormProps) {
                 id="scientific_name"
                 type="text"
                 {...register('scientific_name')}
-                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-gray-900"
                 placeholder="Ej: Oncorhynchus mykiss"
               />
               {errors.scientific_name && (
@@ -103,7 +103,7 @@ export default function FishFormComponent({ fish }: FishFormProps) {
               id="habitat"
               {...register('habitat')}
               rows={3}
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-gray-900"
               placeholder="Describe el hábitat natural..."
             />
             {errors.habitat && <p className="text-red-600 text-sm mt-1">{errors.habitat.message}</p>}
@@ -119,7 +119,7 @@ export default function FishFormComponent({ fish }: FishFormProps) {
                 type="number"
                 step="0.1"
                 {...register('mean_size', { valueAsNumber: true })}
-                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-gray-900"
                 placeholder="0"
               />
               {errors.mean_size && <p className="text-red-600 text-sm mt-1">{errors.mean_size.message}</p>}
@@ -134,7 +134,7 @@ export default function FishFormComponent({ fish }: FishFormProps) {
                 type="number"
                 step="0.01"
                 {...register('mean_weight', { valueAsNumber: true })}
-                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-gray-900"
                 placeholder="0.00"
               />
               {errors.mean_weight && <p className="text-red-600 text-sm mt-1">{errors.mean_weight.message}</p>}
@@ -148,7 +148,7 @@ export default function FishFormComponent({ fish }: FishFormProps) {
                 id="diet"
                 type="text"
                 {...register('diet')}
-                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-gray-900"
                 placeholder="Ej: Carnívoro"
               />
               {errors.diet && <p className="text-red-600 text-sm mt-1">{errors.diet.message}</p>}
@@ -163,7 +163,7 @@ export default function FishFormComponent({ fish }: FishFormProps) {
               id="img"
               type="url"
               {...register('img')}
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-gray-900"
               placeholder="https://ejemplo.com/imagen.jpg"
             />
             {errors.img && <p className="text-red-600 text-sm mt-1">{errors.img.message}</p>}
