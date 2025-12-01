@@ -4,6 +4,7 @@ import React from "react";
 import Image from "next/image";
 import { useCart } from "@/hooks/useCart";
 import { CartItem } from "@/interfaces/product";
+import Link from "next/link";
 export default function Cart() {
   const { productos, updateCantidad, removeProducto, clear } = useCart();
 
@@ -75,23 +76,23 @@ export default function Cart() {
               <div className="mt-4 flex items-center gap-4">
                 <button
                   onClick={() => decrementar(p)}
-                  className="w-10 h-10 flex items-center justify-center border rounded-lg text-lg hover:bg-gray-50"
+                  className="w-10 h-10 flex items-center justify-center border rounded-lg text-black hover:bg-gray-50"
                   aria-label={`Disminuir cantidad de ${p.name}`}
                 >
                   -
                 </button>
 
-                <div className="w-12 text-center font-medium text-lg">{p.cantidad}</div>
+                <div className="w-12 text-center font-medium text-black">{p.cantidad}</div>
 
                 <button
                   onClick={() => incrementar(p)}
-                  className="w-10 h-10 flex items-center justify-center border rounded-lg text-lg hover:bg-gray-50"
+                  className="w-10 h-10 flex items-center justify-center border rounded-lg text-black hover:bg-gray-50"
                   aria-label={`Aumentar cantidad de ${p.name}`}
                 >
                   +
                 </button>
 
-                <div className="ml-6 text-sm text-gray-600">Subtotal: <span className="font-semibold text-gray-800">${(Number(p.price) * p.cantidad).toFixed(2)}</span></div>
+                <div className="ml-6 text-sm text-black">Subtotal: <span className="font-semibold text-black">${(Number(p.price) * p.cantidad).toFixed(2)}</span></div>
               </div>
             </div>
           </div>
@@ -102,30 +103,31 @@ export default function Cart() {
         <div className="flex items-center gap-3">
           <button
             onClick={() => clear()}
-            className="px-5 py-3 border rounded-lg text-sm bg-white hover:bg-gray-50"
+            className="px-5 py-3 border rounded-lg text-black bg-white hover:bg-gray-50"
           >
             Vaciar carrito
           </button>
         </div>
 
         <div className="w-full md:w-auto bg-gradient-to-r from-white to-gray-50 border rounded-2xl p-6 shadow-lg">
-          <p className="text-sm text-gray-500">Total</p>
-          <p className="text-3xl font-extrabold text-gray-900">${total.toFixed(2)}</p>
+          <p className="text-sm text-black">Total</p>
+          <p className="text-3xl font-extrabold text-black">${total.toFixed(2)}</p>
 
           <div className="mt-4 flex gap-3">
-            <button
-              onClick={() => alert('Ir a checkout (implementa la lógica)')}
-              className="flex-1 md:flex-initial px-6 py-3 bg-blue-600 text-white rounded-lg font-medium shadow"
-            >
-              Ir a pagar
-            </button>
-
-            <button
-              onClick={() => alert('Seguir comprando')}
-              className="hidden md:inline-block px-6 py-3 border rounded-lg text-sm"
-            >
-              Seguir comprando
-            </button>
+            <Link href="/payment">
+              <button
+                className="flex-1 md:flex-initial px-6 py-3 bg-blue-600 text-white rounded-lg font-medium shadow"
+              >
+                Ir a pagar
+              </button>
+            </Link>
+            <Link href="/home">
+              <button
+                className="hidden md:inline-block px-6 py-3 border rounded-lg text-black"
+              >
+                Seguir comprando
+              </button>
+            </Link>
           </div>
         </div>
       </div>
