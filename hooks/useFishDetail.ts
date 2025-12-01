@@ -1,16 +1,6 @@
 "use client";
 import { useEffect, useState } from "react";
-
-export interface Fish {
-  id: number;
-  common_name: string;
-  scientific_name: string;
-  habitat: string;
-  mean_size: number;
-  mean_weight: number;
-  diet: string;
-  img: string;
-}
+import { Fish } from "@/interfaces/fish";
 
 export const useFishDetail = (id: string) => {
   const [fish, setFish] = useState<Fish | null>(null);
@@ -37,12 +27,12 @@ export const useFishDetail = (id: string) => {
 
         // Aseguramos formato consistente
         setFish({
-          id: Number(data.id),
+          fish_id: Number(data.fish_id),
           common_name: String(data.common_name ?? "Pez"),
           scientific_name: String(data.scientific_name ?? "Nombre científico"),
           habitat: String(data.habitat ?? "Desconocido"),
-          mean_size: Number(data.mean_size ?? 0),
-          mean_weight: Number(data.mean_weight ?? 0),
+          mean_size: String(data.mean_size ?? "0"),
+          mean_weight: String(data.mean_weight ?? "0"),
           diet: String(data.diet ?? "Desconocida"),
           img: String(
             data.img ?? "https://placehold.co/600x400?text=Sin+Imagen+del+Pez"

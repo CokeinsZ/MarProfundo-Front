@@ -1,4 +1,4 @@
-import Fishbowl from "@/components/organisms/fishbowl";
+import FishMerge from "@/components/molecules/fishMerge";
 
 export default function FishPage() {
   return (

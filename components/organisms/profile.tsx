@@ -23,7 +23,7 @@ export default function Profile() {
     national_id: "",
   });
 
-  const fillDataFromUser = (userData: any) => {
+  const fillDataFromUser = (userData: { name?: string; last_name?: string; email?: string; phone?: string; address?: string; national_id?: string } | null) => {
     if (userData) {
       setFormData({
         name: userData.name || "",
@@ -182,7 +182,14 @@ export default function Profile() {
   );
 }
 
-const InputField = ({ label, name, value, isEditing, onChange, disabled = false }: any) => {
+const InputField = ({ label, name, value, isEditing, onChange, disabled = false }: {
+  label: string;
+  name: string;
+  value: string;
+  isEditing: boolean;
+  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  disabled?: boolean;
+}) => {
   return (
     <div className="flex flex-col group">
       <label className="text-sm font-semibold text-gray-700 mb-1.5">{label}</label>

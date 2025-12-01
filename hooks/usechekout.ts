@@ -1,5 +1,4 @@
 // hooks/usechekout.ts
-import Cookies from "js-cookie";
 import { useState, useRef, useEffect } from "react";
 import axios from "axios";
 import { useCart } from "@/hooks/useCart";
@@ -172,7 +171,10 @@ export function useCheckout() {
       console.debug("ORDER DTO =>", dto);
 
       const url = `https://back.mar-abierto.online/orders`;
-      const token = Cookies.get("accessToken") || null;
+      const token = document.cookie
+        .split('; ')
+        .find(row => row.startsWith('accessToken='))
+        ?.split('=')[1] || null;
       const headers: Record<string, string> = {};
       if (token) headers["Authorization"] = `Bearer ${token}`;
 
