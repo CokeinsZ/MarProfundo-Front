@@ -1,9 +1,11 @@
 export interface Product {
   product_id: number;
   name: string;
-  description?: string;
+  description: string;
   price: number;
-  img?: string;
+  img: string;
+  created_at: Date;
+  updated_at: Date;
 }
 
 export interface CartItem extends Product {

@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { User } from "@/interfaces/user";
+import { User, UserRegister } from "@/interfaces/user";
 import axios from "axios";
 
 export function useRegister() {
@@ -7,7 +7,7 @@ export function useRegister() {
   const [mensaje, setMensaje] = useState("");
   const [loading, setLoading] = useState(false);
 
-  const registerUser = async (userdata: User) => {
+  const registerUser = async (userdata: UserRegister) => {
     const controller = new AbortController();
     try {
       setLoading(true);
@@ -30,8 +30,8 @@ export function useRegister() {
         password: String(""), // No devolver la contraseña
         phone: String(data?.user.phone ?? ""),
         address: String(data?.user.address ?? ""),
-        status: String(data?.user.status ?? ""),
-        role: String(data?.user.role ?? "usuario"),
+        status: data.user.status,
+        role: data.user.role,
       };
 
       setUser(mapped);
