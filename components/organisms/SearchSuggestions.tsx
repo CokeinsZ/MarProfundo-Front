@@ -44,7 +44,7 @@ export default function SearchSuggestions({ query }: SearchResultsProps) {
                   className="hover:bg-gray-800 rounded-lg p-2 transition"
                 >
                   <Link
-                    href={`/fishbowl/${pez.id}`}
+                    href={`/fish/${pez.id}`}
                     className="flex items-center gap-3"
                   >
                     <img
