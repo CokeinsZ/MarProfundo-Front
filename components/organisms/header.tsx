@@ -5,7 +5,6 @@ import Link from "next/link";
 import SearchSuggestions from "./SearchSuggestions";
 
 
-// ...existing code...
 
 export default function Header() {
   const [hasToken, setHasToken] = useState(false);
@@ -158,4 +157,3 @@ export default function Header() {
     </header>
   );
 }
-// ...existing code...
