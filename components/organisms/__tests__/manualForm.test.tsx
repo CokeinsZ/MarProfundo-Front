@@ -2,13 +2,11 @@ import React from 'react';
 import { render, screen, waitFor, fireEvent } from '@testing-library/react';
 import ManualFormComponent from '../manualForm';
 
-// Mock de next/navigation
 const mockPush = jest.fn();
 jest.mock('next/navigation', () => ({
   useRouter: () => ({ push: mockPush }),
 }));
 
-// Mock de hooks personalizados
 const mockCreateManual = jest.fn();
 const mockCreateBlocks = jest.fn();
 jest.mock('@/hooks/useManualForm', () => ({
@@ -19,7 +17,7 @@ jest.mock('@/hooks/useManualForm', () => ({
   }),
 }));
 
-// Mock de lucide-react usando createElement
+
 jest.mock('lucide-react', () => ({
   Plus: (props: any) => <svg data-testid="plus-icon" {...props}>Plus</svg>,
   Trash2: (props: any) => <svg data-testid="trash-icon" {...props}>Trash2</svg>,
@@ -27,7 +25,6 @@ jest.mock('lucide-react', () => ({
   MoveDown: (props: any) => <svg data-testid="move-down-icon" {...props}>MoveDown</svg>,
 }));
 
-// Mock de react-hook-form usando jest.fn()
 const mockUseForm = jest.fn();
 const mockUseFieldArray = jest.fn();
 jest.mock('react-hook-form', () => ({
@@ -35,12 +32,11 @@ jest.mock('react-hook-form', () => ({
   useFieldArray: () => mockUseFieldArray(),
 }));
 
-// Mock de @hookform/resolvers/zod
 jest.mock('@hookform/resolvers/zod', () => ({
   zodResolver: jest.fn(),
 }));
 
-// Mock del schema
+
 jest.mock('@/schemas/manual', () => ({
   manualSchema: {},
   ManualFormData: {},
@@ -54,7 +50,6 @@ describe('ManualFormComponent', () => {
     mockCreateManual.mockResolvedValue({ manual_id: '123' });
     mockCreateBlocks.mockResolvedValue({ success: true });
     
-    // Configurar useForm mock
     mockUseForm.mockReturnValue({
       register: jest.fn().mockReturnValue({}),
       control: {},
@@ -69,7 +64,6 @@ describe('ManualFormComponent', () => {
       formState: { errors: {} },
     });
     
-    // Configurar useFieldArray mock
     mockUseFieldArray.mockReturnValue({
       fields: [
         { id: '1', index: 0, type: 'text', content: 'Bloque 1' },

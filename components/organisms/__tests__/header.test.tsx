@@ -10,7 +10,6 @@ jest.mock("next/image", () => ({
   },
 }));
 
-// Mock del componente SearchSuggestions
 jest.mock("../SearchSuggestions", () => ({
   __esModule: true,
   default: ({ query }: { query: string }) => (
@@ -35,11 +34,9 @@ describe("Header Component", () => {
     const header = screen.getByRole("banner");
     expect(header).toBeInTheDocument();
     
-    // Verifica que el logo esté presente
     const logo = screen.getByAltText("Logo MARPROFUNDO");
     expect(logo).toBeInTheDocument();
     
-    // Verifica los enlaces de navegación
     expect(screen.getByText("MAR ABIERTO")).toBeInTheDocument();
     expect(screen.getByText("Home")).toBeInTheDocument();
     expect(screen.getByText("Categorias")).toBeInTheDocument();
@@ -52,7 +49,6 @@ describe("Header Component", () => {
   it("shows login button when no token is present", async () => {
     render(<Header />);
     
-    // Espera a que el efecto se ejecute
     await waitFor(() => {
       const loginButton = screen.getByText("Login");
       expect(loginButton).toBeInTheDocument();
@@ -61,7 +57,6 @@ describe("Header Component", () => {
   });
 
   it("shows profile button when token is present", async () => {
-    // Configura cookie con token
     Object.defineProperty(document, "cookie", {
       writable: true,
       value: "accessToken=abc123",
@@ -93,7 +88,6 @@ describe("Header Component", () => {
     
     fireEvent.change(searchInput, { target: { value: "pez" } });
     
-    // No necesita waitFor porque el estado se actualiza sincrónicamente
     const suggestions = screen.getByTestId("search-suggestions");
     expect(suggestions).toBeInTheDocument();
     expect(suggestions).toHaveTextContent("Resultados para: pez");
@@ -117,10 +111,8 @@ describe("Header Component", () => {
     render(<Header />);
     
     // Buscar el botón del carrito de compras
-    // Todos los botones, encontrar el que contiene un SVG (el ícono del carrito)
     const buttons = screen.getAllByRole("button");
     
-    // El botón del carrito es el primero que no tiene texto visible
     const cartButton = buttons.find(button => {
       const hasText = button.textContent && button.textContent.trim().length > 0;
       const hasSvg = button.querySelector('svg');
@@ -147,7 +139,6 @@ describe("Header Component", () => {
     const header = screen.getByRole("banner");
     expect(header).toHaveClass("sticky", "top-0", "z-50");
     
-    // Buscar el botón de Login (no el enlace dentro de él)
     const loginButton = screen.getByRole("button", { name: "Login" });
     expect(loginButton).toHaveClass("bg-blue-600", "hover:bg-blue-700");
   });
@@ -160,7 +151,6 @@ describe("Header Component", () => {
     
     expect(addEventListenerSpy).toHaveBeenCalledWith("storage", expect.any(Function));
     
-    // Simula un evento de storage
     const storageEvent = new Event("storage");
     window.dispatchEvent(storageEvent);
     
@@ -173,18 +163,14 @@ describe("Header Component", () => {
   });
 
   it("handles server-side rendering by checking for document", () => {
-    // Guarda la implementación original
     const originalDocument = global.document;
     
-    // Simula entorno sin document (SSR) - usando un mock temporal
     const originalDefineProperty = Object.defineProperty;
     Object.defineProperty = jest.fn();
     
     try {
-      // Esto debería renderizar sin errores
       expect(() => render(<Header />)).not.toThrow();
     } finally {
-      // Restaura la implementación original
       Object.defineProperty = originalDefineProperty;
     }
   });

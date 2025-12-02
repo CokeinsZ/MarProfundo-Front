@@ -3,7 +3,6 @@ import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import ProductDetails from '../productDetails';
 import { Product } from '@/interfaces/product';
 
-// Mock de next/image CORREGIDO
 jest.mock('next/image', () => ({
   __esModule: true,
   default: (props: any) => {
@@ -30,7 +29,6 @@ const mockProduct: Product = {
   description: 'Test Description',
   price: 99.99,
   img: '/test-image.jpg',
-  pcategory_id: 1,
   created_at: new Date(),
   updated_at: new Date(),
 };
@@ -58,7 +56,6 @@ describe('ProductDetails Component', () => {
 
     const { container } = render(<ProductDetails id="1" />);
 
-    // Verificar que se muestra el skeleton loader
     const pulseElement = container.querySelector('.animate-pulse');
     expect(pulseElement).toBeTruthy();
   });
@@ -108,19 +105,16 @@ describe('ProductDetails Component', () => {
 
     render(<ProductDetails id="1" />);
 
-    // Verificar elementos del producto
     expect(screen.getByText(mockProduct.name)).toBeInTheDocument();
     expect(screen.getByText(mockProduct.description!)).toBeInTheDocument();
-    // Formato COP colombiano: "$99,99"
+
     expect(screen.getByText(/\$\s*99,99/)).toBeInTheDocument();
     expect(screen.getByText('ID: 1')).toBeInTheDocument();
     expect(screen.getByText('En stock (10)')).toBeInTheDocument();
     
-    // Verificar botones
     expect(screen.getByText('Añadir al carrito')).toBeInTheDocument();
     expect(screen.getByText('Ver más')).toBeInTheDocument();
     
-    // Verificar selector de cantidad
     expect(screen.getByText('1')).toBeInTheDocument();
     expect(screen.getByText('10 disponibles')).toBeInTheDocument();
   });
@@ -167,7 +161,6 @@ describe('ProductDetails Component', () => {
     
     expect(screen.getByText('2')).toBeInTheDocument();
     
-    // Click 8 more times to reach max (10)
     for (let i = 0; i < 8; i++) {
       fireEvent.click(increaseButton);
     }
@@ -194,13 +187,11 @@ describe('ProductDetails Component', () => {
     const increaseButton = screen.getByLabelText('Aumentar cantidad');
     const decreaseButton = screen.getByLabelText('Disminuir cantidad');
     
-    // Increase to 3
     fireEvent.click(increaseButton);
     fireEvent.click(increaseButton);
     
     expect(screen.getByText('3')).toBeInTheDocument();
     
-    // Decrease back to 1
     fireEvent.click(decreaseButton);
     fireEvent.click(decreaseButton);
     
@@ -330,7 +321,7 @@ describe('ProductDetails Component', () => {
 
       render(<ProductDetails id="1" />);
 
-      // Verificar formato COP colombiano: "$1.234,56"
+      // Verificar formato COP
       expect(screen.getByText(/\$\s*1\.234,56/)).toBeInTheDocument();
     });
 

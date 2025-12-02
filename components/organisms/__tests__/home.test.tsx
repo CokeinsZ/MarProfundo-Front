@@ -76,21 +76,16 @@ describe("Home Component", () => {
     render(<Home />);
     
     await waitFor(() => {
-      // Verificar que ya no está en estado de carga
       expect(screen.queryByText("Cargando...")).not.toBeInTheDocument();
       
-      // Verificar que no muestra LandingWelcome
       expect(screen.queryByTestId("landing-welcome")).not.toBeInTheDocument();
-      
-      // Verificar contenido de la tienda
+
       expect(screen.getByText("¡Bienvenido de vuelta! 🎣")).toBeInTheDocument();
       expect(screen.getByText("Explora nuestros productos y ofertas especiales")).toBeInTheDocument();
       
-      // Verificar componentes hijos
       expect(screen.getByTestId("pcategories")).toBeInTheDocument();
       expect(screen.getByTestId("fishes-promo")).toBeInTheDocument();
       
-      // Verificar productos destacados
       expect(screen.getByText("Productos Destacados")).toBeInTheDocument();
       expect(screen.getByText("Caña Profesional")).toBeInTheDocument();
       expect(screen.getByText("Kit Señuelos")).toBeInTheDocument();
@@ -105,31 +100,23 @@ describe("Home Component", () => {
     
     const { unmount } = render(<Home />);
     
-    // Verificar que se añade el event listener
     expect(addEventListenerSpy).toHaveBeenCalledWith("storage", expect.any(Function));
     
-    // Simular un cambio en el storage (logout en otra pestaña)
     const storageEvent = new Event("storage");
     window.dispatchEvent(storageEvent);
     
-    // Desmontar componente
     unmount();
     
-    // Verificar que se remueve el event listener
     expect(removeEventListenerSpy).toHaveBeenCalledWith("storage", expect.any(Function));
   });
 
   it("handles server-side rendering by checking for document", () => {
-    // Guardar document original
     const originalDocument = global.document;
     
-    // Simular entorno sin document (SSR)
     delete (global as any).document;
     
-    // Debe renderizar sin errores
     expect(() => render(<Home />)).not.toThrow();
     
-    // Restaurar document
     (global as any).document = originalDocument;
   });
 
@@ -142,17 +129,14 @@ describe("Home Component", () => {
     render(<Home />);
     
     await waitFor(() => {
-      // Verificar estructura de las tarjetas de producto
       const productCards = screen.getAllByRole("button", { name: /agregar al carrito/i });
       expect(productCards).toHaveLength(4);
       
-      // Verificar precios
       expect(screen.getByText("$120.000")).toBeInTheDocument();
       expect(screen.getByText("$85.000")).toBeInTheDocument();
       expect(screen.getByText("$250.000")).toBeInTheDocument();
       expect(screen.getByText("$45.000")).toBeInTheDocument();
       
-      // Verificar emojis en los productos (están como spans con texto)
       const emojis = ["🎣", "🐟", "🐠", "🦐"];
       emojis.forEach(emoji => {
         const emojiElements = screen.getAllByText(emoji);
@@ -172,11 +156,8 @@ describe("Home Component", () => {
     await waitFor(() => {
       const addToCartButtons = screen.getAllByRole("button", { name: /agregar al carrito/i });
       
-      // Simular click en el primer botón
       fireEvent.click(addToCartButtons[0]);
       
-      // Aquí podrías verificar que se ejecuta alguna función
-      // Por ejemplo, si tuvieras un handler onClick en el botón
     });
   });
 
@@ -193,7 +174,6 @@ describe("Home Component", () => {
         const mainContainer = screen.getByRole("main") || document.querySelector(".min-h-screen");
         expect(mainContainer).toBeInTheDocument();
         
-        // Verificar clases de Tailwind
         const bannerSection = screen.getByText("¡Bienvenido de vuelta! 🎣").closest("section");
         expect(bannerSection).toHaveClass("bg-blue-600", "text-white", "py-8");
         
@@ -219,19 +199,15 @@ describe("Home Component", () => {
 
   describe("Error Handling", () => {
     it("handles undefined document gracefully", async () => {
-      // Mockear que estamos en servidor (document undefined)
       const originalDocument = global.document;
       delete (global as any).document;
       
-      // No debería lanzar error
       expect(() => render(<Home />)).not.toThrow();
       
-      // Restaurar document
       (global as any).document = originalDocument;
     });
 
     it("handles malformed cookie strings", async () => {
-      // Cookie mal formada
       Object.defineProperty(document, "cookie", {
         writable: true,
         value: "accessToken=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT",
@@ -240,7 +216,6 @@ describe("Home Component", () => {
       render(<Home />);
       
       await waitFor(() => {
-        // Debería mostrar LandingWelcome porque el token está vacío
         expect(screen.getByTestId("landing-welcome")).toBeInTheDocument();
       });
     });
