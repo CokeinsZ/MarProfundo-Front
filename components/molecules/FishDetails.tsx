@@ -1,9 +1,13 @@
 "use client";
 import { useFishDetail } from "@/hooks/useFishDetail";
+import { Link } from "lucide-react";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
+
 
 export default function FishDetails({ id }: { id: string }) {
   const { fish, loading, errorMsg } = useFishDetail(id);
+  const router = useRouter();
 
   if (loading) {
     return (
@@ -62,7 +66,6 @@ export default function FishDetails({ id }: { id: string }) {
               {fish.scientific_name}
             </p>
           </div>
-
         </header>
 
         <section className="prose prose-sm max-w-none">
@@ -87,7 +90,11 @@ export default function FishDetails({ id }: { id: string }) {
           <p className="text-xs text-gray-500">
             Información obtenida desde la base marina.
           </p>
-          <button className="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg shadow-md text-sm transition-all">
+
+          <button
+            onClick={() => router.push("/fish")}
+            className="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg shadow-md text-sm transition-all"
+          >
             Ver más especies
           </button>
         </footer>

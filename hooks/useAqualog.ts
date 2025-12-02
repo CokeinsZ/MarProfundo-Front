@@ -116,5 +116,5 @@ export function useAqualog() {
       .filter(Boolean) as FishBowlItem[];
   }, [userFishes, fishes]);
 
-  return { loading, mensaje, fishesAcualog , fishesBowl };
+  return { user, loading, mensaje, fishesAcualog , fishesBowl };
 }
