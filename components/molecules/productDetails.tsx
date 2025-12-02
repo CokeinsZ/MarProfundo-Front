@@ -17,7 +17,7 @@ export default function ProductDetails({ id }: Props) {
   const stock = Warehouse_Product?.quantity ?? 0;
 
   const formatCurrency = (value: number) =>
-    new Intl.NumberFormat("es-ES", { style: "currency", currency: "EUR" }).format(value);
+    new Intl.NumberFormat("es-CO", { style: "currency", currency: "COP" }).format(value);
 
   if (loading) {
     return (
