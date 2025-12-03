@@ -42,7 +42,7 @@ export function useUserDetail(userId?: string) {
         }
       }
 
-      const url = `https://back.mar-abierto.online/users/${targetUserId}`;
+      const url = `${process.env.API_URL}/users/${targetUserId}`;
       const { data } = await axios.get(url, {
         headers: {
           Authorization: `Bearer ${token}`
@@ -65,7 +65,7 @@ export function useUserDetail(userId?: string) {
     try {
       const token = getTokenFromCookies();
       await axios.patch(
-        `https://back.mar-abierto.online/users/${id}/status`,
+        `${process.env.NEXT_PUBLIC_API_URL}/users/${id}/status`,
         { status },
         { headers: { Authorization: `Bearer ${token}` } }
       );
@@ -79,7 +79,7 @@ export function useUserDetail(userId?: string) {
     try {
       const token = getTokenFromCookies();
       await axios.patch(
-        `https://back.mar-abierto.online/users/${id}/role`,
+        `${process.env.NEXT_PUBLIC_API_URL}/users/${id}/role`,
         { role },
         { headers: { Authorization: `Bearer ${token}` } }
       );

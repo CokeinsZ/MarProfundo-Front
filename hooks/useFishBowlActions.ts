@@ -36,7 +36,7 @@ export function useFishBowlActions() {
       };
 
       const { data } = await axios.post(
-        "https://back.mar-abierto.online/user-fish",
+        `${process.env.API_URL}/user-fish`,
         payload,
         {
           signal: controller.signal,
@@ -76,7 +76,7 @@ export function useFishBowlActions() {
       if (!token) return { success: false, message: "No hay sesión activa" };
 
       const { data } = await axios.delete(
-        `https://back.mar-abierto.online/user-fish/${user_id}/${fish_id}`,
+        `${process.env.NEXT_PUBLIC_API_URL}/user-fish/${user_id}/${fish_id}`,
         {
           signal: controller.signal,
           headers: {

@@ -15,7 +15,9 @@ export const useFishDetail = (id: string) => {
       setErrorMsg(null);
 
       try {
-        const res = await fetch(`https://back.mar-abierto.online/fishes/${id}`);
+        const res = await fetch(
+          `${process.env.NEXT_PUBLIC_API_URL}/fishes/${id}`
+        );
 
         if (!res.ok) {
           setErrorMsg("No se pudo obtener la información del pez.");

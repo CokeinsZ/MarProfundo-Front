@@ -40,8 +40,8 @@ export const useFilterName = (query: string) => {
 
       try {
         const [productsRes, fishesRes] = await Promise.all([
-          fetch("https://back.mar-abierto.online/products"),
-          fetch("https://back.mar-abierto.online/fishes"),
+          fetch(`${process.env.NEXT_PUBLIC_API_URL}/products`),
+          fetch(`${process.env.NEXT_PUBLIC_API_URL}/fishes`),
         ]);
 
         const products = await productsRes.json();

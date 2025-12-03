@@ -11,7 +11,9 @@ export function useManuals() {
     const fetchManuals = async () => {
       try {
         setLoading(true);
-        const { data } = await axios.get<Manual[]>('https://back.mar-abierto.online/manuals/');
+        const { data } = await axios.get<Manual[]>(
+          `${process.env.NEXT_PUBLIC_API_URL}/manuals/`
+        );
         setManuals(data);
         setError(null);
       } catch (err) {

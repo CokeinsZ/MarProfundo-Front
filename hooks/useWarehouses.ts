@@ -24,7 +24,7 @@ export function useWarehouses() {
     try {
       setLoading(true);
       setError(null);
-      const response = await axios.get('https://back.mar-abierto.online/warehouse');
+      const response = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/warehouse`);
       setWarehouses(response.data || []);
     } catch (err) {
       setError('Error al cargar las bodegas');

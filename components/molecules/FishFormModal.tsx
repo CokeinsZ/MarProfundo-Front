@@ -1,4 +1,5 @@
 "use client";
+
 import React, { useState } from "react";
 
 export default function FishFormModal({
@@ -16,20 +17,25 @@ export default function FishFormModal({
   const [isFavorite, setIsFavorite] = useState(false);
 
   return (
-    <div className="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center z-40">
-      <div className="bg-white p-8 rounded-xl shadow-xl w-[90%] max-w-md">
-        <h2 className="text-2xl font-bold text-blue-900 mb-4 text-center">
-          Agregar {fish.common_name} 🐟
+    <div className="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-40 p-4">
+      <div className="bg-white p-8 rounded-2xl shadow-2xl w-full max-w-md border border-gray-200">
+        {/* Título */}
+        <h2 className="text-3xl font-bold text-blue-900 text-center mb-6">
+          Agregar {fish?.common_name} 🐟
         </h2>
 
         {/* Formulario */}
-        <div className="space-y-4">
+        <div className="space-y-5">
+          {/* Origen */}
           <div>
-            <label className="font-semibold">Origen</label>
+            <label className="font-semibold text-gray-800 mb-1 block">
+              Origen
+            </label>
             <select
               value={origin}
               onChange={(e) => setOrigin(e.target.value)}
-              className="w-full mt-1 p-2 border rounded-lg"
+              className="w-full p-3 border border-gray-400 rounded-lg bg-gray-50
+                         focus:ring-2 focus:ring-blue-600 focus:border-blue-600 text-gray-900"
             >
               <option value="fishing">Fishing</option>
               <option value="bought">Bought</option>
@@ -37,43 +43,55 @@ export default function FishFormModal({
             </select>
           </div>
 
+          {/* Tamaño */}
           <div>
-            <label className="font-semibold">Tamaño</label>
+            <label className="font-semibold text-gray-800 mb-1 block">
+              Tamaño
+            </label>
             <input
               type="text"
               placeholder="Ej: 10cm, 2m..."
-              className="w-full mt-1 p-2 border rounded-lg"
+              className="w-full p-3 border border-gray-400 rounded-lg bg-gray-50
+                         focus:ring-2 focus:ring-blue-600 focus:border-blue-600 text-gray-900"
               value={size}
               onChange={(e) => setSize(e.target.value)}
             />
           </div>
 
+          {/* Peso */}
           <div>
-            <label className="font-semibold">Peso</label>
+            <label className="font-semibold text-gray-800 mb-1 block">
+              Peso
+            </label>
             <input
               type="text"
               placeholder="Ej: 500g, 8kg..."
-              className="w-full mt-1 p-2 border rounded-lg"
+              className="w-full p-3 border border-gray-400 rounded-lg bg-gray-50
+                         focus:ring-2 focus:ring-blue-600 focus:border-blue-600 text-gray-900"
               value={weight}
               onChange={(e) => setWeight(e.target.value)}
             />
           </div>
 
-          <div className="flex items-center gap-2">
+          {/* Favorito */}
+          <div className="flex items-center gap-3">
             <input
               type="checkbox"
+              className="w-5 h-5 accent-blue-600 cursor-pointer"
               checked={isFavorite}
               onChange={(e) => setIsFavorite(e.target.checked)}
             />
-            <label>Marcar como favorito ⭐</label>
+            <label className="text-gray-900 text-lg cursor-pointer">
+              Marcar como favorito ⭐
+            </label>
           </div>
         </div>
 
         {/* Botones */}
-        <div className="flex justify-between mt-6">
+        <div className="flex justify-between mt-8">
           <button
             onClick={onClose}
-            className="px-4 py-2 bg-gray-400 text-white rounded-lg hover:bg-gray-500"
+            className="px-5 py-2.5 bg-gray-400 text-white rounded-lg hover:bg-gray-500 transition"
           >
             Cancelar
           </button>
@@ -87,7 +105,7 @@ export default function FishFormModal({
                 is_favorite: isFavorite,
               })
             }
-            className="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg"
+            className="px-5 py-2.5 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition"
           >
             Guardar
           </button>

@@ -26,11 +26,14 @@ export function useDashboard() {
         return;
       }
 
-      const response = await axios.get('https://back.mar-abierto.online/stats/dashboard', {
-        headers: {
-          'Authorization': `Bearer ${token}`
+      const response = await axios.get(
+        `${process.env.NEXT_PUBLIC_API_URL}/stats/dashboard`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
         }
-      });
+      );
 
       setMetrics(response.data.metrics);
       setRecentOrders(response.data.recentOrders);

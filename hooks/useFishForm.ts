@@ -22,11 +22,11 @@ export function useFishForm() {
         return;
       }
 
-      await axios.post('https://back.mar-abierto.online/fishes', data, {
+      await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/fishes`, data, {
         headers: {
-          'Authorization': `Bearer ${token}`,
-          'Content-Type': 'application/json'
-        }
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+        },
       });
 
       alert('Pez creado exitosamente');
@@ -57,12 +57,16 @@ export function useFishForm() {
         return;
       }
 
-      await axios.put(`https://back.mar-abierto.online/fishes/${fishId}`, data, {
-        headers: {
-          'Authorization': `Bearer ${token}`,
-          'Content-Type': 'application/json'
+      await axios.put(
+        `${process.env.NEXT_PUBLIC_API_URL}/fishes/${fishId}`,
+        data,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+          },
         }
-      });
+      );
 
       alert('Pez actualizado exitosamente');
       router.push('/admin/fishes');
@@ -90,11 +94,14 @@ export function useFishForm() {
         throw new Error('No hay sesión activa');
       }
 
-      await axios.delete(`https://back.mar-abierto.online/fishes/${fishId}`, {
-        headers: {
-          'Authorization': `Bearer ${token}`
+      await axios.delete(
+        `${process.env.NEXT_PUBLIC_API_URL}/fishes/${fishId}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
         }
-      });
+      );
 
       return true;
     } catch (error) {

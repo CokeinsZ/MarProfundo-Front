@@ -50,6 +50,12 @@ export async function middleware(req: NextRequest) {
   if (pathname.startsWith("/fishbowl") && !isAuth) {
     return NextResponse.redirect(new URL("/login", req.url));
   }
+  if (pathname.startsWith("/aqualog") && !isAuth) {
+    return NextResponse.redirect(new URL("/fish", req.url));
+  }
+  if (pathname.startsWith("/payment") && !isAuth) {
+    return NextResponse.redirect(new URL("/login", req.url));
+  }
   
   if (pathname.startsWith("/profile") && !isAuth) {
     return NextResponse.redirect(new URL("/login", req.url));

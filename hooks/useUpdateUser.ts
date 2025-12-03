@@ -26,7 +26,7 @@ export function useUpdateUser() {
         return { success: false, data: null };
       }
 
-      const url = `https://back.mar-abierto.online/users/${userId}`;
+      const url = `${process.env.NEXT_PUBLIC_API_URL}/users/${userId}`;
 
       const { data } = await axios.patch(url, userData, {
         signal: controller.signal,

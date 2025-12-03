@@ -28,11 +28,14 @@ export function useOrders() {
         return;
       }
 
-      const response = await axios.get('https://back.mar-abierto.online/orders', {
-        headers: {
-          'Authorization': `Bearer ${token}`
+      const response = await axios.get(
+        `${process.env.NEXT_PUBLIC_API_URL}/orders`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
         }
-      });
+      );
 
       setOrders(response.data || []);
     } catch (err) {

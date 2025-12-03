@@ -32,11 +32,14 @@ export function useProduct(productId: string | null) {
         return;
       }
 
-      const response = await axios.get(`https://back.mar-abierto.online/products/${id}`, {
-        headers: {
-          'Authorization': `Bearer ${token}`
+      const response = await axios.get(
+        `${process.env.NEXT_PUBLIC_API_URL}/products/${id}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
         }
-      });
+      );
 
       setProduct(response.data);
     } catch (err) {

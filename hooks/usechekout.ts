@@ -170,7 +170,7 @@ export function useCheckout() {
 
       console.debug("ORDER DTO =>", dto);
 
-      const url = `https://back.mar-abierto.online/orders`;
+      const url = `${process.env.NEXT_PUBLIC_API_URL}/orders`;
       const token = document.cookie
         .split('; ')
         .find(row => row.startsWith('accessToken='))

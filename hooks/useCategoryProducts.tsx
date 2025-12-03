@@ -15,7 +15,7 @@ export function useCategoryProducts() {
       setLoading(true);
       setMensaje("");
 
-      const url = `https://back.mar-abierto.online/product-pcategory/by-pcategory/${category}`;
+      const url = `${process.env.NEXT_PUBLIC_API_URL}/product-pcategory/by-pcategory/${category}`;
       const { data } = await axios.get(url, { signal: controller.signal });
 
       console.log("Category Products data:", data);

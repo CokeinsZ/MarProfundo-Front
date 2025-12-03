@@ -24,7 +24,7 @@ export function useProductDetail(id: string) {
           return;
         }
 
-        const product_url = `https://back.mar-abierto.online/products/${id}`;
+        const product_url = `${process.env.NEXT_PUBLIC_API_URL}/products/${id}`;
         const productResp = await axios.get(product_url, { signal: controller.signal });
         const data = productResp.data ?? {};
         

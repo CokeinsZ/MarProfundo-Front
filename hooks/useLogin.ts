@@ -14,7 +14,7 @@ export function useLogin() {
       setLoading(true);
       setMensaje(null);
 
-      const url = "https://back.mar-abierto.online/users/login";
+      const url = `${process.env.NEXT_PUBLIC_API_URL}/users/login`;
       const { data } = await axios.post(url, credentials, { signal: controller.signal });
 
       if (!data) {

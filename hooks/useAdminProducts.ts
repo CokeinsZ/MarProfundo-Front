@@ -14,15 +14,18 @@ export function useAdminProducts() {
   const fetchProducts = async () => {
     try {
       setLoading(true);
-      const response = await axios.get('https://back.mar-abierto.online/products', {
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        data: {
-          "max": 20,
-          "page": 1
+      const response = await axios.get(
+        `${process.env.NEXT_PUBLIC_API_URL}/products`,
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+          data: {
+            max: 20,
+            page: 1,
+          },
         }
-      });
+      );
 
       // Calcular stock total para cada producto
       const productsWithStock = response.data.map((product: AdminProduct) => {

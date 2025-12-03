@@ -32,11 +32,14 @@ export function useOrderDetail(orderId: string | null) {
         return;
       }
 
-      const response = await axios.get(`https://back.mar-abierto.online/orders/${id}`, {
-        headers: {
-          'Authorization': `Bearer ${token}`
+      const response = await axios.get(
+        `${process.env.NEXT_PUBLIC_API_URL}/orders/${id}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
         }
-      });
+      );
 
       setOrder(response.data);
     } catch (err) {
@@ -59,13 +62,13 @@ export function useOrderDetail(orderId: string | null) {
       }
 
       await axios.patch(
-        `https://back.mar-abierto.online/orders/${orderId}/status`,
+        `${process.env.NEXT_PUBLIC_API_URL}/orders/${orderId}/status`,
         { status },
         {
           headers: {
-            'Authorization': `Bearer ${token}`,
-            'Content-Type': 'application/json'
-          }
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+          },
         }
       );
 

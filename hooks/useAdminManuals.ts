@@ -10,7 +10,9 @@ export function useAdminManuals() {
   const fetchManuals = async () => {
     try {
       setLoading(true);
-      const { data } = await axios.get<Manual[]>('https://back.mar-abierto.online/manuals/');
+      const { data } = await axios.get<Manual[]>(
+        `${process.env.NEXT_PUBLIC_API_URL}/manuals/`
+      );
       setManuals(data);
       setError(null);
     } catch (err) {
@@ -34,8 +36,8 @@ export function useAdminManuals() {
         .split('; ')
         .find(row => row.startsWith('accessToken='))
         ?.split('=')[1];
-      await axios.delete(`https://back.mar-abierto.online/manuals/${id}`, {
-        headers: { Authorization: `Bearer ${token}` }
+      await axios.delete(`${process.env.NEXT_PUBLIC_API_URL}/manuals/${id}`, {
+        headers: { Authorization: `Bearer ${token}` },
       });
       await fetchManuals();
       return true;

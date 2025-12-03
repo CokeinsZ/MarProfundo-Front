@@ -12,7 +12,7 @@ export function useManual(manualId: number) {
       try {
         setLoading(true);
         const { data } = await axios.get<Manual>(
-          `https://back.mar-abierto.online/manuals/${manualId}`
+          `${process.env.NEXT_PUBLIC_API_URL}/manuals/${manualId}`
         );
         setManual(data);
         setError(null);

@@ -12,7 +12,7 @@ export function useManualBlocks(manualId: number) {
       try {
         setLoading(true);
         const { data } = await axios.get<ManualBlock[]>(
-          `https://back.mar-abierto.online/manual-blocks/manual/${manualId}`
+          `${process.env.NEXT_PUBLIC_API_URL}/manual-blocks/manual/${manualId}`
         );
         setBlocks(data);
         setError(null);

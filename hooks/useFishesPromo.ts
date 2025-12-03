@@ -15,7 +15,7 @@ export function useFishesPromo() {
         setLoading(true);
         setMensaje("");
 
-        const url = "https://back.mar-abierto.online/fishes";
+        const url = `${process.env.NEXT_PUBLIC_API_URL}/fishes`;
         const { data } = await axios.get(url, { signal: controller.signal });
 
         console.log("Fishes data:", data);

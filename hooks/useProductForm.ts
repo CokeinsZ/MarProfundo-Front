@@ -32,7 +32,7 @@ export function useProductForm() {
       };
       
       // 1. Crear el producto
-      const productResponse = await axios.post('https://back.mar-abierto.online/products', {
+      const productResponse = await axios.post(`${process.env.API_URL}/products`, {
         name: data.name,
         description: data.description,
         price: data.price,
@@ -44,7 +44,7 @@ export function useProductForm() {
       // 2. Vincular categorías
       await Promise.all(
         data.categories.map(categoryId =>
-          axios.post('https://back.mar-abierto.online/product-pcategory', {
+          axios.post(`${process.env.API_URL}/product-pcategory`, {
             product_id: String(productId),
             pcategory_id: String(categoryId),
           }, { headers })
@@ -54,7 +54,7 @@ export function useProductForm() {
       // 3. Vincular bodegas con stock
       await Promise.all(
         data.warehouses.map(warehouse =>
-          axios.post('https://back.mar-abierto.online/warehouse-product', {
+          axios.post(`${process.env.API_URL}/warehouse-product`, {
             product_id: productId,
             warehouse_id: warehouse.warehouse_id,
             quantity: warehouse.quantity,
@@ -98,7 +98,7 @@ export function useProductForm() {
       };
 
       // 1. Actualizar el producto
-      await axios.patch(`https://back.mar-abierto.online/products/${productId}`, {
+      await axios.patch(`${process.env.NEXT_PUBLIC_API_URL}/products/${productId}`, {
         name: data.name,
         description: data.description,
         price: data.price,
@@ -108,8 +108,11 @@ export function useProductForm() {
       // 2. Eliminar todas las categorías anteriores una por una
       if (currentCategories && currentCategories.length > 0) {
         await Promise.all(
-          currentCategories.map(categoryId =>
-            axios.delete(`https://back.mar-abierto.online/product-pcategory/${productId}/${categoryId}`, { headers })
+          currentCategories.map((categoryId) =>
+            axios.delete(
+              `${process.env.NEXT_PUBLIC_API_URL}/product-pcategory/${productId}/${categoryId}`,
+              { headers }
+            )
           )
         );
       }
@@ -117,7 +120,7 @@ export function useProductForm() {
       // 3. Crear las nuevas categorías
       await Promise.all(
         data.categories.map(categoryId =>
-          axios.post('https://back.mar-abierto.online/product-pcategory', {
+          axios.post(`${process.env.API_URL}/product-pcategory`, {
             product_id: String(productId),
             pcategory_id: String(categoryId),
           }, { headers })
@@ -125,12 +128,15 @@ export function useProductForm() {
       );
 
       // 4. Eliminar todos los registros de warehouse-product anteriores
-      await axios.delete(`https://back.mar-abierto.online/warehouse-product/${productId}`, { headers });
+      await axios.delete(
+        `${process.env.NEXT_PUBLIC_API_URL}/warehouse-product/${productId}`,
+        { headers }
+      );
 
       // 5. Crear los nuevos registros de warehouse-product
       await Promise.all(
         data.warehouses.map(warehouse =>
-          axios.post('https://back.mar-abierto.online/warehouse-product', {
+          axios.post(`${process.env.API_URL}/warehouse-product`, {
             product_id: productId,
             warehouse_id: warehouse.warehouse_id,
             quantity: warehouse.quantity,

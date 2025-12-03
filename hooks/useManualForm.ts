@@ -26,7 +26,7 @@ export function useManualForm() {
         ?.split('=')[1];
       
       const response = await axios.post(
-        'https://back.mar-abierto.online/manuals/',
+        `${process.env.NEXT_PUBLIC_API_URL}/manuals/`,
         data,
         { headers: { Authorization: `Bearer ${token}` } }
       );
@@ -56,7 +56,7 @@ export function useManualForm() {
         ?.split('=')[1];
       
       await axios.post(
-        'https://back.mar-abierto.online/manual-blocks/bulk/',
+        `${process.env.NEXT_PUBLIC_API_URL}/manual-blocks/bulk/`,
         data,
         { headers: { Authorization: `Bearer ${token}` } }
       );
@@ -82,7 +82,7 @@ export function useManualForm() {
         ?.split('=')[1];
       
       await axios.delete(
-        `https://back.mar-abierto.online/manual-blocks/${blockId}`,
+        `${process.env.NEXT_PUBLIC_API_URL}/manual-blocks/${blockId}`,
         { headers: { Authorization: `Bearer ${token}` } }
       );
     } catch (err) {

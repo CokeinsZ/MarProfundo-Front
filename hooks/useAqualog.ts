@@ -46,7 +46,7 @@ export function useAqualog() {
         setLoading(true);
         setMensaje("");
 
-        const url = `https://back.mar-abierto.online/user-fish/user/${user.user_id}`;
+        const url = `${process.env.NEXT_PUBLIC_API_URL}/user-fish/user/${user.user_id}`;
         const { data } = await axios.get(url, { signal: controller.signal });
 
         const mapped: UserFish[] = (data ?? []).map((item: any) => ({
@@ -115,6 +115,7 @@ export function useAqualog() {
       })
       .filter(Boolean) as FishBowlItem[];
   }, [userFishes, fishes]);
+  console.log(user);
 
   return { user, loading, mensaje, fishesAcualog , fishesBowl };
 }

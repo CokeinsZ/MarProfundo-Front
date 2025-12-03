@@ -18,7 +18,9 @@ export function useFishes() {
       setLoading(true);
       setError(null);
 
-      const response = await axios.get('https://back.mar-abierto.online/fishes');
+      const response = await axios.get(
+        `${process.env.NEXT_PUBLIC_API_URL}/fishes`
+      );
       setFishes(response.data || []);
     } catch (err) {
       setError('Error al cargar los peces');

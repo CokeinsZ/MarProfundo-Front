@@ -28,11 +28,14 @@ export function useUsers() {
         return;
       }
 
-      const response = await axios.get('https://back.mar-abierto.online/users', {
-        headers: {
-          'Authorization': `Bearer ${token}`
+      const response = await axios.get(
+        `${process.env.NEXT_PUBLIC_API_URL}/users`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
         }
-      });
+      );
 
       setUsers(response.data || []);
     } catch (err) {
