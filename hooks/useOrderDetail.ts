@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import axios from "axios";
 import { OrderDetail } from "@/interfaces/order";
 
@@ -72,7 +72,6 @@ export function useOrderDetail(orderId: string | null) {
         }
       );
 
-      // Recargar el pedido después de actualizar
       if (order) {
         await fetchOrder(orderId.toString());
       }
@@ -84,8 +83,25 @@ export function useOrderDetail(orderId: string | null) {
     }
   };
 
+
+  const orderStats = useMemo(() => {
+    if (!order?.products) return { totalMoney: 0, totalItems: 0 };
+
+    const totalMoney = order.products.reduce((acc, product) => {
+      const qty = product.quantity || 1; 
+      return acc + (product.price * qty);
+    }, 0);
+
+    const totalItems = order.products.reduce((acc, product) => {
+      return acc + (product.quantity || 1);
+    }, 0);
+
+    return { totalMoney, totalItems };
+  }, [order]);
+
   return {
     order,
+    orderStats, 
     loading,
     error,
     updateStatus,
