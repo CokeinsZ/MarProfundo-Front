@@ -44,8 +44,9 @@ export default function FishForm({
     }
   }, [initialData]);
 
-  const handleChange = (k: keyof Fish, v: any) => {
-    setForm((s) => ({ ...s, [k]: v }));
+  // 🔥 TIPADO CORRECTO → sin "any"
+  const handleChange = <K extends keyof Fish>(key: K, value: Fish[K]) => {
+    setForm((prev) => ({ ...prev, [key]: value }));
   };
 
   const handleSubmit = async (e?: React.FormEvent) => {

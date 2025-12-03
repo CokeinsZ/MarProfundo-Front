@@ -1,6 +1,6 @@
 "use client";
 import { useFishDetail } from "@/hooks/useFishDetail";
-import { Link } from "lucide-react";
+
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 

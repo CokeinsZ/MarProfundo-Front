@@ -1,5 +1,7 @@
-import '@testing-library/jest-dom';
 
+import "@testing-library/jest-dom";
+
+// <reference types="jest" />
 const originalError = console.error;
 beforeAll(() => {
   console.error = (...args) => {

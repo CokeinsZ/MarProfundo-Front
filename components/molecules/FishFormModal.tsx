@@ -1,15 +1,23 @@
 "use client";
 
 import React, { useState } from "react";
+import { Fish } from "@/interfaces/fish";
+
+interface FishFormData {
+  origin: string;
+  size: string;
+  weight: string;
+  is_favorite: boolean;
+}
 
 export default function FishFormModal({
   fish,
   onClose,
   onSubmit,
 }: {
-  fish: any;
+  fish: Fish | null;
   onClose: () => void;
-  onSubmit: (data: any) => void;
+  onSubmit: (data: FishFormData) => void;
 }) {
   const [origin, setOrigin] = useState("fishing");
   const [size, setSize] = useState("");

@@ -50,8 +50,7 @@ export default function Checkout() {
       const id = data?.id ?? data?.orderId ?? data?.order?.id ?? null;
       openThankYouModal(id);
     } catch (err) {
-      // localMsg already set by hook
-      // no-op
+      console.error("Error processing order:", err);
     } finally {
       console.log("carrito:", productos);
     }

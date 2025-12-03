@@ -5,10 +5,13 @@ import { useAqualog } from "@/hooks/useAqualog";
 import { useFishBowlActions } from "@/hooks/useFishBowlActions";
 import FishFormModal from "@/components/molecules/FishFormModal";
 
+
+
 export default function Fishbowl() {
   const { user, fishesAcualog, mensaje } = useAqualog();
-  const { addFish, loading, mensaje: msg } = useFishBowlActions();
+  const { addFish, mensaje: msg } = useFishBowlActions();
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const [selectedFish, setSelectedFish] = useState<any | null>(null);
 
   return (

@@ -4,7 +4,7 @@ import Image from "next/image";
 import { useAqualog } from "@/hooks/useAqualog";
 
 export default function Aqualog() {
-  const { user, fishesAcualog, loading, mensaje } = useAqualog();
+  const { user, fishesAcualog} = useAqualog();
   const peces = fishesAcualog ?? [];
 
   const total = peces.length;

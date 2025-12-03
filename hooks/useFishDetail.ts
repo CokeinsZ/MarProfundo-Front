@@ -40,8 +40,8 @@ export const useFishDetail = (id: string) => {
             data.img ?? "https://placehold.co/600x400?text=Sin+Imagen+del+Pez"
           ),
         });
-      } catch (error) {
-        console.error("Error cargando pez:", error);
+      } catch (err: unknown) {
+        console.error("Error cargando pez:", err);
         setErrorMsg("Hubo un error al obtener la información del pez.");
       } finally {
         setLoading(false);

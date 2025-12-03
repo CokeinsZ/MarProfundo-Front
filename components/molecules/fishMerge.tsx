@@ -3,6 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useFishes } from "@/hooks/useFishes";
+import { Fish } from "@/interfaces/fish"; 
 
 export default function FishMerge() {
   const { fishes, loading, error } = useFishes();
@@ -30,9 +31,9 @@ export default function FishMerge() {
       </h1>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
-        {fishes.map((fish: any) => (
+        {fishes.map((fish: Fish) => (
           <Link
-            key={fish.id}
+            key={fish.fish_id} 
             href={`/fish/${fish.fish_id}`}
             className="bg-white shadow-lg rounded-xl overflow-hidden hover:scale-[1.02] transition-transform duration-200 block"
           >

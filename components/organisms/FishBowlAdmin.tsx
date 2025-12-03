@@ -15,7 +15,6 @@ export default function FishBowlAdmin() {
     fishes,
     loading,
     mensaje: error,
-    fetchFishes,
     createFish,
     updateFish,
     deleteFish,
