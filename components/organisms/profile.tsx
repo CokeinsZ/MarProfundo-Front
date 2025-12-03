@@ -2,15 +2,17 @@
 import { useState, useEffect } from "react";
 import { useUserDetail } from "@/hooks/useUserDetail"; 
 import { useUpdateUser } from "@/hooks/useUpdateUser";
+import { useUserOrders } from "@/hooks/useUserOrders";
 import { useRouter } from "next/navigation";
+import { OrderCard } from "@/components/molecules/orderCard";
 
 export default function Profile() {
   const router = useRouter();
   
   const { user, loading: loadingUser, error: errorUser, refetch } = useUserDetail();
-  
   const { updateUser, loading: updating, mensaje: apiError } = useUpdateUser(); 
-  
+  const { orders, loading: loadingOrders } = useUserOrders(user?.user_id);
+
   const [isEditing, setIsEditing] = useState(false);
   const [notification, setNotification] = useState<{ type: 'success' | 'error', message: string } | null>(null);
 
@@ -65,19 +67,14 @@ export default function Profile() {
     window.location.href = "/login";
   };
 
-
   const handleSaveChanges = async () => {
     if (!user || !user.user_id) return;
-
     const response = await updateUser(user.user_id, formData);
 
     if (response.success) {
-      setNotification({ type: 'success', message: '¡Guardado en base de datos correctamente!' });
-      
+      setNotification({ type: 'success', message: '¡Guardado correctamente!' });
       fillDataFromUser(response.data);
-      
       refetch(); 
-
       setIsEditing(false);
     } else {
       setNotification({ type: 'error', message: apiError || 'No se pudieron guardar los cambios.' });
@@ -96,9 +93,7 @@ export default function Profile() {
     return (
       <div className="min-h-screen flex items-center justify-center bg-gray-50">
         <div className="text-center p-8 bg-white rounded-xl shadow-sm">
-          <p className="text-red-500 font-medium mb-4">
-            {errorUser === "No hay sesión activa" ? "Debes iniciar sesión" : "Error al cargar datos"}
-          </p>
+          <p className="text-red-500 font-medium mb-4">Error al cargar datos</p>
           <button onClick={() => router.push('/login')} className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">Ir al Login</button>
         </div>
       </div>
@@ -155,7 +150,7 @@ export default function Profile() {
             </div>
           </div>
 
-          <div className="mt-10 pt-6 border-t border-gray-100 flex flex-col sm:flex-row justify-between items-center gap-4">
+          <div className="mt-8 pt-6 border-t border-gray-100 flex flex-col sm:flex-row justify-between items-center gap-4">
             <button onClick={handleLogout} className="text-red-500 font-semibold hover:text-red-700 hover:bg-red-50 px-4 py-2 rounded-lg transition-colors duration-200 flex items-center gap-2">
               <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="w-5 h-5"><path strokeLinecap="round" strokeLinejoin="round" d="M15.75 9V5.25A2.25 2.25 0 0013.5 3h-6a2.25 2.25 0 00-2.25 2.25v13.5A2.25 2.25 0 007.5 21h6a2.25 2.25 0 002.25-2.25V15M12 9l-3 3m0 0l3 3m-3-3h12.75" /></svg>
               Cerrar Sesión
@@ -176,6 +171,36 @@ export default function Profile() {
               )}
             </div>
           </div>
+
+          <div className="mt-8 border-t border-gray-100 pt-6">
+            <h3 className="text-xl font-bold text-gray-800 mb-4 flex items-center gap-2">
+              📋 Historial de Compras
+            </h3>
+
+            {loadingOrders ? (
+              <div className="flex justify-center py-6">
+                <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600"></div>
+              </div>
+            ) : orders.length > 0 ? (
+              <div className="grid gap-4 max-h-[600px] overflow-y-auto pr-2 custom-scrollbar">
+                {orders.map((order) => (
+                  <OrderCard 
+                    key={order.order_id} 
+                    orderId={order.order_id} 
+                    date={order.created_at} 
+                    initialStatus={order.status}
+                  />
+                ))}
+              </div>
+            ) : (
+              <div className="text-center py-10 bg-gray-50 rounded-xl border border-dashed border-gray-300">
+                <p className="text-4xl mb-2 opacity-30">🛍️</p>
+                <p className="text-gray-500 font-medium text-lg">Aún no has realizado pedidos</p>
+                <p className="text-gray-400 text-sm">Tus compras aparecerán aquí cuando las realices.</p>
+              </div>
+            )}
+          </div>
+
         </div>
       </div>
     </div>
