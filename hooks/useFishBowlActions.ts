@@ -36,7 +36,7 @@ export function useFishBowlActions() {
       };
 
       const { data } = await axios.post(
-        `${process.env.API_URL}/user-fish`,
+        `${process.env.NEXT_PUBLIC_API_URL}/user-fish`,
         payload,
         {
           signal: controller.signal,

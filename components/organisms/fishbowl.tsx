@@ -6,8 +6,8 @@ import { useFishBowlActions } from "@/hooks/useFishBowlActions";
 import FishFormModal from "@/components/molecules/FishFormModal";
 
 export default function Fishbowl() {
-  const { user, fishesAcualog, fishesBowl, mensaje } = useAqualog();
-  const { addFish, removeFish, loading, mensaje: msg } = useFishBowlActions();
+  const { user, fishesAcualog, mensaje } = useAqualog();
+  const { addFish, loading, mensaje: msg } = useFishBowlActions();
 
   const [selectedFish, setSelectedFish] = useState<any | null>(null);
 
@@ -25,11 +25,11 @@ export default function Fishbowl() {
           {fishesAcualog.map(({ fish, isDiscovered }) => (
             <div
               key={fish.fish_id}
-              className={`rounded-xl p-6 flex flex-col items-center text-center shadow-md border
+              className={`rounded-xl p-6 flex flex-col items-center text-center shadow-md border transition duration-300
               ${
                 isDiscovered
                   ? "bg-white border-blue-300"
-                  : "bg-gray-200 border-gray-400 opacity-60"
+                  : "bg-gray-700 border-gray-600 text-gray-300"
               }`}
             >
               <Image
@@ -37,30 +37,31 @@ export default function Fishbowl() {
                 alt={fish.common_name}
                 width={200}
                 height={150}
-                className="object-contain mb-4"
+                className={`object-contain mb-4 ${
+                  !isDiscovered ? "opacity-70" : ""
+                }`}
               />
 
-              <h2 className="text-xl font-bold text-blue-900">
+              <h2
+                className={`text-xl font-bold ${
+                  isDiscovered ? "text-blue-900" : "text-gray-200"
+                }`}
+              >
                 {fish.common_name}
               </h2>
 
-              <p className="italic text-gray-700 mb-2">
+              <p
+                className={`italic mb-2 ${
+                  isDiscovered ? "text-gray-700" : "text-gray-300"
+                }`}
+              >
                 {fish.scientific_name}
               </p>
 
-              {isDiscovered ? (
-                <button
-                  onClick={async () => {
-                    
-                  }}
-                  className="mt-4 px-4 py-2 bg-red-600 hover:bg-red-700 text-white rounded-lg shadow"
-                >
-                  Eliminar
-                </button>
-              ) : (
+              {!isDiscovered && (
                 <button
                   onClick={() => setSelectedFish(fish)}
-                  className="mt-4 px-4 py-2 bg-green-600 hover:bg-green-700 text-white rounded-lg shadow"
+                  className="mt-4 px-5 py-2 bg-green-500 hover:bg-green-400 text-white font-semibold rounded-lg shadow-lg hover:scale-105 transition-transform"
                 >
                   Agregar
                 </button>

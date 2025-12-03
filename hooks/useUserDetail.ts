@@ -42,7 +42,7 @@ export function useUserDetail(userId?: string) {
         }
       }
 
-      const url = `${process.env.API_URL}/users/${targetUserId}`;
+      const url = `${process.env.NEXT_PUBLIC_API_URL}/users/${targetUserId}`;
       const { data } = await axios.get(url, {
         headers: {
           Authorization: `Bearer ${token}`

@@ -32,33 +32,45 @@ export function useProductForm() {
       };
       
       // 1. Crear el producto
-      const productResponse = await axios.post(`${process.env.API_URL}/products`, {
-        name: data.name,
-        description: data.description,
-        price: data.price,
-        img: data.img,
-      }, { headers });
+      const productResponse = await axios.post(
+        `${process.env.NEXT_PUBLIC_API_URL}/products`,
+        {
+          name: data.name,
+          description: data.description,
+          price: data.price,
+          img: data.img,
+        },
+        { headers }
+      );
 
       const productId = productResponse.data.product_id;
 
       // 2. Vincular categorías
       await Promise.all(
-        data.categories.map(categoryId =>
-          axios.post(`${process.env.API_URL}/product-pcategory`, {
-            product_id: String(productId),
-            pcategory_id: String(categoryId),
-          }, { headers })
+        data.categories.map((categoryId) =>
+          axios.post(
+            `${process.env.NEXT_PUBLIC_API_URL}/product-pcategory`,
+            {
+              product_id: String(productId),
+              pcategory_id: String(categoryId),
+            },
+            { headers }
+          )
         )
       );
 
       // 3. Vincular bodegas con stock
       await Promise.all(
-        data.warehouses.map(warehouse =>
-          axios.post(`${process.env.API_URL}/warehouse-product`, {
-            product_id: productId,
-            warehouse_id: warehouse.warehouse_id,
-            quantity: warehouse.quantity,
-          }, { headers })
+        data.warehouses.map((warehouse) =>
+          axios.post(
+            `${process.env.NEXT_PUBLIC_API_URL}/warehouse-product`,
+            {
+              product_id: productId,
+              warehouse_id: warehouse.warehouse_id,
+              quantity: warehouse.quantity,
+            },
+            { headers }
+          )
         )
       );
 
@@ -119,11 +131,15 @@ export function useProductForm() {
 
       // 3. Crear las nuevas categorías
       await Promise.all(
-        data.categories.map(categoryId =>
-          axios.post(`${process.env.API_URL}/product-pcategory`, {
-            product_id: String(productId),
-            pcategory_id: String(categoryId),
-          }, { headers })
+        data.categories.map((categoryId) =>
+          axios.post(
+            `${process.env.NEXT_PUBLIC_API_URL}/product-pcategory`,
+            {
+              product_id: String(productId),
+              pcategory_id: String(categoryId),
+            },
+            { headers }
+          )
         )
       );
 
@@ -135,12 +151,16 @@ export function useProductForm() {
 
       // 5. Crear los nuevos registros de warehouse-product
       await Promise.all(
-        data.warehouses.map(warehouse =>
-          axios.post(`${process.env.API_URL}/warehouse-product`, {
-            product_id: productId,
-            warehouse_id: warehouse.warehouse_id,
-            quantity: warehouse.quantity,
-          }, { headers })
+        data.warehouses.map((warehouse) =>
+          axios.post(
+            `${process.env.NEXT_PUBLIC_API_URL}/warehouse-product`,
+            {
+              product_id: productId,
+              warehouse_id: warehouse.warehouse_id,
+              quantity: warehouse.quantity,
+            },
+            { headers }
+          )
         )
       );
 
